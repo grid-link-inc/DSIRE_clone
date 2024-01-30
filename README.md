@@ -133,3 +133,8 @@ Please generate a [GitHub issue](https://github.com/codedthemes/mantis-free-reac
 
 ## Project setup steps
 https://firebase.google.com/docs/web/setup
+
+## Hosting
+https://firebase.google.com/docs/hosting
+
+firebase emulators:start
