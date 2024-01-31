@@ -119,6 +119,6 @@ ui-debug.log*
 functions/venv
 
 # Python
-*/.DS_Store
+*.DS_Store
 __pycache__/
 *.pyc

@@ -12,28 +12,28 @@ function createData(trackingNo, name, state_name, websiteurl, program_type_name,
   return { trackingNo, name, state_name, websiteurl, program_type_name, program_category_name, start_date, end_date };
 }
 
-const rows = [
-  createData(22574, "North Dakota Solar/Wind Easements and Laws", "North Dakota", "", "Solar/Wind Access Policy", "Regulatory Policy", "2022-01-01", "2025-01-01"),
-  createData(2956, "Qualifying Wood Stove Deduction", "Arizona", "", "Personal Tax Deduction", "Financial Incentive", "1994-01-01", ""),
-  createData(2287, "Maryland Solar Easements & Rights Laws", "Maryland", "", "Solar/Wind Access Policy", "Regulatory Policy", "2006-05-12", "2006-05-12"),
-  createData(2740, "Oregon Solar and Wind Easements/Rights Laws", "Oregon", "", "Solar/Wind Access Policy", "Regulatory Policy", "", ""),
-  createData(4790, "Alaska Solar Easements", "Alaska", "", "Solar/Wind Access Policy", "Regulatory Policy", "2003-05-20", "2003-05-20"),
-  createData(4717, "Idaho Solar Easements & Access Laws", "Idaho", "", "Solar/Wind Access Policy", "Regulatory Policy", "2004-03-06", "2007-03-06"),
-  createData(2658, "Kansas Solar Easement Laws", "Kansas", "", "Solar/Wind Access Policy", "Regulatory Policy", "", ""),
-  createData(4469, "Xcel Energy - Net Metering", "Colorado", "http://www.xcelenergy.com/docs/corpcomm/psco_elec_entire_tariff.pdf", "Net Metering", "Regulatory Policy", "2015-01-26", "2015-01-26"),
-  createData(5897, "Wood-Burning Heating System Deduction", "Alabama", "", "Personal Tax Deduction", "Financial Incentive", "", ""),
-  createData(1995, "Georgia Solar Easement Laws", "Georgia", "", "Solar/Wind Access Policy", "Regulatory Policy", "2014-07-01", "2017-07-01"),
-  createData(1996, "Kentucky Solar Easements Laws", "Kentucky", "", "Solar/Wind Access Policy", "Regulatory Policy", "2003-07-01", "2009-07-01"),
-  createData(4792, "Maine Solar Easements (Duplicate entry)", "Maine", "", "Solar/Wind Access Policy", "Regulatory Policy", "", ""),
-  createData(5017, "Rhode Island Solar Easement Laws", "Rhode Island", "", "Solar/Wind Access Policy", "Regulatory Policy", "2006-08-08", "2006-08-08"),
-  createData(2696, "Solar Easements & Rights Laws", "Washington", "", "Solar/Wind Access Policy", "Regulatory Policy", "2010-06-01", "2013-06-01"),
-  createData(4671, "Fuel Mix and Emissions Disclosure", "Texas", "http://www.powertochoose.org", "Generation Disclosure", "Regulatory Policy", "", ""),
-  createData(5020, "Arizona Solar Rights", "Arizona", "", "Solar/Wind Access Policy", "Regulatory Policy", "2010-10-01", "2010-10-01"),
-  createData(5186, "SRP - Solar Water Heating Program", "Arizona", "http://www.srpnet.com/environment/solar/home/solarwaterheat.aspx", "Rebate Program", "Financial Incentive", "", ""),
-  createData(5884, "Renewable Portfolio Standard", "Wisconsin", "https://psc.wi.gov/Pages/Programs/RpsCompliance.aspx", "Renewables Portfolio Standard", "Regulatory Policy", "", ""),
-  createData(2748, "Tennessee Solar Easement and Access Laws", "Tennessee", "", "Solar/Wind Access Policy", "Regulatory Policy", "", ""),
-  createData(3152, "New Jersey Solar Easements (duplicate entry)", "New Jersey", "", "Solar/Wind Access Policy", "Regulatory Policy", "", "")
-];
+// const rows = [
+//   createData(22574, "North Dakota Solar/Wind Easements and Laws", "North Dakota", "", "Solar/Wind Access Policy", "Regulatory Policy", "2022-01-01", "2025-01-01"),
+//   createData(2956, "Qualifying Wood Stove Deduction", "Arizona", "", "Personal Tax Deduction", "Financial Incentive", "1994-01-01", ""),
+//   createData(2287, "Maryland Solar Easements & Rights Laws", "Maryland", "", "Solar/Wind Access Policy", "Regulatory Policy", "2006-05-12", "2006-05-12"),
+//   createData(2740, "Oregon Solar and Wind Easements/Rights Laws", "Oregon", "", "Solar/Wind Access Policy", "Regulatory Policy", "", ""),
+//   createData(4790, "Alaska Solar Easements", "Alaska", "", "Solar/Wind Access Policy", "Regulatory Policy", "2003-05-20", "2003-05-20"),
+//   createData(4717, "Idaho Solar Easements & Access Laws", "Idaho", "", "Solar/Wind Access Policy", "Regulatory Policy", "2004-03-06", "2007-03-06"),
+//   createData(2658, "Kansas Solar Easement Laws", "Kansas", "", "Solar/Wind Access Policy", "Regulatory Policy", "", ""),
+//   createData(4469, "Xcel Energy - Net Metering", "Colorado", "http://www.xcelenergy.com/docs/corpcomm/psco_elec_entire_tariff.pdf", "Net Metering", "Regulatory Policy", "2015-01-26", "2015-01-26"),
+//   createData(5897, "Wood-Burning Heating System Deduction", "Alabama", "", "Personal Tax Deduction", "Financial Incentive", "", ""),
+//   createData(1995, "Georgia Solar Easement Laws", "Georgia", "", "Solar/Wind Access Policy", "Regulatory Policy", "2014-07-01", "2017-07-01"),
+//   createData(1996, "Kentucky Solar Easements Laws", "Kentucky", "", "Solar/Wind Access Policy", "Regulatory Policy", "2003-07-01", "2009-07-01"),
+//   createData(4792, "Maine Solar Easements (Duplicate entry)", "Maine", "", "Solar/Wind Access Policy", "Regulatory Policy", "", ""),
+//   createData(5017, "Rhode Island Solar Easement Laws", "Rhode Island", "", "Solar/Wind Access Policy", "Regulatory Policy", "2006-08-08", "2006-08-08"),
+//   createData(2696, "Solar Easements & Rights Laws", "Washington", "", "Solar/Wind Access Policy", "Regulatory Policy", "2010-06-01", "2013-06-01"),
+//   createData(4671, "Fuel Mix and Emissions Disclosure", "Texas", "http://www.powertochoose.org", "Generation Disclosure", "Regulatory Policy", "", ""),
+//   createData(5020, "Arizona Solar Rights", "Arizona", "", "Solar/Wind Access Policy", "Regulatory Policy", "2010-10-01", "2010-10-01"),
+//   createData(5186, "SRP - Solar Water Heating Program", "Arizona", "http://www.srpnet.com/environment/solar/home/solarwaterheat.aspx", "Rebate Program", "Financial Incentive", "", ""),
+//   createData(5884, "Renewable Portfolio Standard", "Wisconsin", "https://psc.wi.gov/Pages/Programs/RpsCompliance.aspx", "Renewables Portfolio Standard", "Regulatory Policy", "", ""),
+//   createData(2748, "Tennessee Solar Easement and Access Laws", "Tennessee", "", "Solar/Wind Access Policy", "Regulatory Policy", "", ""),
+//   createData(3152, "New Jersey Solar Easements (duplicate entry)", "New Jersey", "", "Solar/Wind Access Policy", "Regulatory Policy", "", "")
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -155,27 +155,27 @@ export default function ProgramTable() {
   const [order] = useState('asc');
   const [orderBy] = useState('trackingNo');
   const [selected] = useState([]);
-  // call firebaseApp function on mount
+  const [rows, setRows] = useState([]);
+
   useEffect(() => {
     const functions = getFunctions();
-    const onRequestExample = httpsCallable(functions, 'on_request_example');
     const getPrograms = httpsCallable(functions, 'get_programs');
+    // program.id,
+    // program.name,
+    // state.name AS state_name,
+    // program.websiteurl,
+    // program_type.name AS program_type_name,
+    // program_category.name AS program_category_name,
+    // program.start_date,
+    // program.end_date
     getPrograms({})
       .then((result) => {
-        // Read result of the Cloud Function.
-        /** @type {any} */
-        const data = result.data;
-        console.log(data);
+        console.log(result);
+        const data = result.data.programs;
+        let rows = data.map(row => createData(...row));
+        setRows(rows);
       });
-    // onRequestExample({})
-    //   .then((result) => {
-    //     // Read result of the Cloud Function.
-    //     /** @type {any} */
-    //     const data = result.data;
-    //     console.log(data);
-    //   });
   }, []);
-
 
   const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
 
