@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Link as RouterLink } from 'react-router-dom';
 // material-ui
-import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
-// project import
-import Dot from 'components/@extended/Dot';
+import firebaseApp from '../../firebase/firebase';
+
 
 function createData(trackingNo, name, state_name, websiteurl, program_type_name, program_category_name, start_date, end_date) {
   return { trackingNo, name, state_name, websiteurl, program_type_name, program_category_name, start_date, end_date };
@@ -155,6 +155,11 @@ export default function ProgramTable() {
   const [order] = useState('asc');
   const [orderBy] = useState('trackingNo');
   const [selected] = useState([]);
+  // call firebaseApp function on mount
+  useEffect(() => {
+    // firebaseApp();
+  }, []);
+
 
   const isSelected = (trackingNo) => selected.indexOf(trackingNo) !== -1;
 
@@ -187,7 +192,6 @@ export default function ProgramTable() {
               const isItemSelected = isSelected(row.trackingNo);
               const labelId = `enhanced-table-checkbox-${index}`;
 
-              console.log(row)
               return (
                 <TableRow
                   hover
