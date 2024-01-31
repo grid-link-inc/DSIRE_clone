@@ -159,13 +159,21 @@ export default function ProgramTable() {
   useEffect(() => {
     const functions = getFunctions();
     const onRequestExample = httpsCallable(functions, 'on_request_example');
-    onRequestExample({})
+    const getPrograms = httpsCallable(functions, 'get_programs');
+    getPrograms({})
       .then((result) => {
         // Read result of the Cloud Function.
         /** @type {any} */
         const data = result.data;
         console.log(data);
       });
+    // onRequestExample({})
+    //   .then((result) => {
+    //     // Read result of the Cloud Function.
+    //     /** @type {any} */
+    //     const data = result.data;
+    //     console.log(data);
+    //   });
   }, []);
 
 

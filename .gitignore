@@ -114,3 +114,11 @@ firebase-debug.log*
 firestore-debug.log*
 ui-debug.log*
 .firebase
+
+# functions
+functions/venv
+
+# Python
+*/.DS_Store
+__pycache__/
+*.pyc
