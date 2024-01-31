@@ -5,8 +5,8 @@ import { Link as RouterLink } from 'react-router-dom';
 // material-ui
 import { Box, Link, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 
-import firebaseApp from '../../firebase/firebase';
-
+import { app, functions } from '../../firebase/firebase';
+import { getFunctions, httpsCallable } from "firebase/functions";
 
 function createData(trackingNo, name, state_name, websiteurl, program_type_name, program_category_name, start_date, end_date) {
   return { trackingNo, name, state_name, websiteurl, program_type_name, program_category_name, start_date, end_date };
@@ -157,7 +157,15 @@ export default function ProgramTable() {
   const [selected] = useState([]);
   // call firebaseApp function on mount
   useEffect(() => {
-    // firebaseApp();
+    const functions = getFunctions();
+    const onRequestExample = httpsCallable(functions, 'on_request_example');
+    onRequestExample({})
+      .then((result) => {
+        // Read result of the Cloud Function.
+        /** @type {any} */
+        const data = result.data;
+        console.log(data);
+      });
   }, []);
 
 

@@ -21,14 +21,32 @@ public url
 
 # Live data
 ## firebase app
-
+DONE
 ## cloud function
 https://firebase.google.com/docs/functions/callable?gen=2nd
+DONE
 
+## Security
+App check https://firebase.google.com/docs/app-check/cloud-functions
+env vars for secrets - not necessary: https://firebase.google.com/docs/projects/api-keys
+squash commits
 
+const firebaseConfig = {
+    apiKey: "AIzaSyCmQRbYZnyFurr3yx3o88Wm-TXNdVhkzTk",
+    authDomain: "policy-db.firebaseapp.com",
+    projectId: "policy-db",
+    storageBucket: "policy-db.appspot.com",
+    messagingSenderId: "681212162559",
+    appId: "1:681212162559:web:d62bf83caa104c306f77ca",
+    measurementId: "G-RF37VLFW3T"
+};
 ## query
+maube need: https://firebase.google.com/docs/functions/local-emulator#set_up_admin_credentials_optional
+https://firebase.google.com/docs/functions/config-env?gen=2nd#node.js
 
 ## load into table
+
+
 
 
 
