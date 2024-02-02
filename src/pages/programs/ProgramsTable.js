@@ -1071,32 +1071,20 @@ const renderStatus = (params) => {
   />;
 }
 
-
 const renderName = (params) => {
   return (
-    <Box style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-      <div style={{ flexGrow: 1, marginRight: 'auto', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-        <Link
-          to={`/program/${params.row.id}`}
-          style={{
-            textDecoration: 'none',
-            color: 'inherit',
-            overflow: 'hidden',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          {params.value}
-        </Link>
-      </div>
-      <div style={{ align: 'right' }}>
-        {params.row.websiteurl &&
-          <a href={params.row.websiteurl} style={{ marginLeft: 'auto' }}>
-            <OpenInNewIcon fontSize='small' />
-          </a>
-        }
-      </div>
-    </Box>
+    <Link
+      to={`/programs/${params.row.id}`}
+      style={{
+        color: 'inherit',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        cursor: 'pointer',
+        whiteSpace: 'nowrap',
+      }}
+    >
+      {params.value}
+    </Link>
   );
 }
 
@@ -1116,7 +1104,7 @@ const columns = [
     headerName: 'Name',
     flex: 1,
     headerClassName: 'app-grey--header',
-    // renderCell: renderName, // TODO
+    renderCell: renderName,
   },
   {
     field: 'state_name',
