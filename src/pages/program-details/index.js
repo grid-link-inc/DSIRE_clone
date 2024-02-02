@@ -5,19 +5,24 @@ import {
 } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
-// project import
 // import ProgramDetailBox from './ProgramDetailBox';
 import MainCard from 'components/MainCard';
 import { useEffect } from 'react';
-
+import { app } from '../../firebase/firebase';
+import { getFunctions, httpsCallable } from "firebase/functions";
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const ProgramDetails = () => {
     let { id } = useParams();
 
     useEffect(() => {
-        // load program details
-        console.log('loading program details for id: ', id);
+        const functions = getFunctions();
+        const getProgram = httpsCallable(functions, 'get_program');
+        getProgram({"id": id})
+          .then((result) => {
+              const data = result.data.program;
+              console.log(data);
+          });
     })
     return (
         <Grid container rowSpacing={4.5} columnSpacing={2.75} >
