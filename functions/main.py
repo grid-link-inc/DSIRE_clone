@@ -9,10 +9,6 @@ import sqlalchemy
 
 initialize_app()
 
-@https_fn.on_call()
-def on_request_example(req: https_fn.CallableRequest):
-    return {"response": "Hello world!"}
-
 PROTOTYPING_DB_PW = SecretParam('PROTOTYPING_DB_PW')
 
 @https_fn.on_call(secrets=[PROTOTYPING_DB_PW])
@@ -58,7 +54,7 @@ def get_programs(request: https_fn.CallableRequest):
                 JOIN state on program.state_id = state.id
                 JOIN program_type on program.program_type_id = program_type.id
                 JOIN program_category on program.program_category_id = program_category.id
-                LIMIT 100;
+                WHERE program.published = 1;
             """)).fetchall()
             rows = [list(row) for row in results]
             return {"programs": rows}
