@@ -6,6 +6,8 @@ import MainLayout from 'layout/MainLayout';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
+const Programs = Loadable(lazy(() => import('pages/programs')));
+const ProgramDetails = Loadable(lazy(() => import('pages/program-details')));
 
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
@@ -25,6 +27,14 @@ const MainRoutes = {
     {
       path: '/',
       element: <DashboardDefault />
+    },
+    {
+      path: '/programs',
+      element: <Programs />,
+    },
+    {
+      path: 'programs/:id',
+      element: <ProgramDetails />
     },
     {
       path: 'color',
