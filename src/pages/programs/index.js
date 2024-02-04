@@ -1,9 +1,3 @@
-// material-ui
-import {
-  Grid,
-  Typography
-} from '@mui/material';
-
 // project import
 import ProgramsTable from './ProgramsTable';
 import MainCard from 'components/MainCard';
@@ -12,9 +6,9 @@ import MainCard from 'components/MainCard';
 
 const Programs = () => {
   return (
-        <MainCard sx={{ mt: 2 }} content={false}>
-          <ProgramsTable />
-        </MainCard>
+    <MainCard content={false}>
+      <ProgramsTable />
+    </MainCard>
   );
 };
 

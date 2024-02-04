@@ -884,12 +884,6 @@ export default function ProgramTable() {
         '& .MuiChip-root': {
           borderRadius: 10
         }
-        // width: '100%',
-        // overflowX: 'auto',
-        // position: 'relative',
-        // display: 'block',
-        // maxWidth: '100%',
-        // '& td, & th': { whiteSpace: 'nowrap' }
       }}
     >
       <DataGrid

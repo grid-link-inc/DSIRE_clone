@@ -25,8 +25,8 @@ const fake = {
       authority_id: 268,
       authority_websiteurl:
         'https://www.ksrevisor.org/statutes/chapters/ch58/058_038_0001.html#:~:text=58%2D3801.,by%20such%20easement%20is%20situated.',
-      city_name: 'cistyname',
-      county_name: 'county name',
+      city_name: 'Kansas City',
+      county_name: 'Clay, Platte, and Cass Counties',
       end_date: null,
       id: 8,
       name: 'Kansas Solar Easement Laws',
@@ -38,7 +38,7 @@ const fake = {
         '<p><span>Parties may voluntarily enter into solar easement contracts for the purpose of ensuring adequate exposure of a solar energy system. An easement must be expressed in writing and recorded with the register of deeds for that county.</span><br/></p><p></p><p>The written agreement must contain a description of the airspace in question and any term and/or conditions under which the solar easement is granted or terminated.</p><p></p>',
       utility_name: 'PG&E',
       websiteurl: 'www.kansas.gov',
-      zipcode: 1234
+      zipcode: 64030
     }
   }
 };
@@ -91,7 +91,8 @@ const ProgramDetails = () => {
     const getProgram = httpsCallable(functions, 'get_program');
     getProgram({ id: id }).then((result) => {
       console.log(result);
-      const program = result.data.program;
+      let program = result.data.program;
+      // program = fake.data.program;
       setProgram(program);
       setStart(squashStartDates(program.authority_effective_date, program.authority_effective_text, program.start_date));
       setEnd(squashEndDates(program.authority_expired_date, program.authority_expired_text, program.end_date));

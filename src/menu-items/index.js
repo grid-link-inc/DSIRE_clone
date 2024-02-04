@@ -1,14 +1,10 @@
-// project import
-import pages from './pages';
-import dashboard from './dashboard';
-import utilities from './utilities';
-import support from './support';
+import objects from './objects';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  // items: [dashboard, pages, utilities, support]
-  items: [dashboard]
+  // import and add items to this list to add them to the sidebar
+  items: [objects]
 };
 
 export default menuItems;
