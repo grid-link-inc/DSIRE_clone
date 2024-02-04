@@ -3,7 +3,7 @@ import { Unstable_Grid2 as Grid, Typography } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
 import MainCard from 'components/MainCard';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { app } from '../../firebase/firebase';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import LocationCard from './LocationCard';
@@ -81,24 +81,26 @@ const parseDate = (maybeDateString) => {
 
 const ProgramDetails = () => {
   let { id } = useParams();
-  let start = null;
-  let end = null;
 
-  //   useEffect(() => {
-  // const functions = getFunctions();
-  // const getProgram = httpsCallable(functions, 'get_program');
-  // getProgram({"id": id})
-  //   .then((result) => {
-  //       const data = result.data.program;
-  //       console.log(data);
-  //   });
-  // });
-  start = squashStartDates(
-    fake.data.program.authority_effective_date,
-    fake.data.program.authority_effective_text,
-    fake.data.program.start_date
-  );
-  end = squashEndDates(fake.data.program.authority_expired_date, fake.data.program.authority_expired_text, fake.data.program.end_date);
+  const [program, setProgram] = useState(null);
+  const [start, setStart] = useState(null);
+  const [end, setEnd] = useState(null);
+
+  useEffect(() => {
+    const functions = getFunctions();
+    const getProgram = httpsCallable(functions, 'get_program');
+    getProgram({ id: id }).then((result) => {
+      console.log(result);
+      const program = result.data.program;
+      setProgram(program);
+      setStart(squashStartDates(program.authority_effective_date, program.authority_effective_text, program.start_date));
+      setEnd(squashEndDates(program.authority_expired_date, program.authority_expired_text, program.end_date));
+    });
+  }, [id]);
+
+  if (!program) {
+    return null;
+  }
 
   return (
     <MainCard sx={{ mt: 2 }} content={false}>
@@ -111,32 +113,30 @@ const ProgramDetails = () => {
       >
         <Container maxWidth="false">
           <Stack spacing={3}>
-            <Typography variant="h2">{fake.data.program.name}</Typography>
-            <Typography variant="h4" color="textSecondary">
-              {fake.data.program.program_type_name}
-            </Typography>
             <Grid container spacing={3}>
               <Grid sm={12}>
-                <DescriptionCard descriptionHTMLString={fake.data.program.summary} />
+                <Typography variant="h2">{program.name}</Typography>
+                <Typography variant="h4" color="textSecondary">
+                  {program.program_type_name}
+                </Typography>
               </Grid>
+
               <Grid sm={12} md={6} lg={4}>
-                <LocationCard
-                  state={fake.data.program.state_name}
-                  county={fake.data.program.county_name}
-                  city={fake.data.program.city_name}
-                  zip={fake.data.program.zipcode}
-                />
+                <LocationCard state={program.state_name} county={program.county_name} city={program.city_name} zip={program.zipcode} />
               </Grid>
               <Grid sm={12} md={6} lg={4}>
                 <ResourcesCard
-                  programWebsite={fake.data.program.websiteurl}
-                  authorityCode={fake.data.program.authority_code}
-                  authorityWebsite={fake.data.program.authority_websiteurl}
-                  utilityName={fake.data.program.utility_name}
+                  programWebsite={program.websiteurl}
+                  authorityCode={program.authority_code}
+                  authorityWebsite={program.authority_websiteurl}
+                  utilityName={program.utility_name}
                 />
               </Grid>
               <Grid sm={12} md={6} lg={4}>
                 <TimelineCard startDate={start} endDate={end} />
+              </Grid>
+              <Grid sm={12}>
+                <DescriptionCard descriptionHTMLString={program.summary} />
               </Grid>
             </Grid>
           </Stack>
