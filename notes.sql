@@ -482,16 +482,6 @@ LEFT JOIN zipcode ON program_zipcode.zipcode_id = zipcode.id;
 
 
 
-program.name,
-program.summary AS program_summary,
-
-authority.effective AS authority_effective_date,
-authority.effectivetext AS authority_effective_text,
-authority.expired AS authority_expired_date,                             
-authority.expiredtext AS authority_expired_text,
-program.start_date,
-program.end_date,
-
 program_type.name AS program_type_name,
 program_category.name AS program_category_name,
 

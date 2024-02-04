@@ -113,7 +113,7 @@ const ProgramDetails = () => {
           <Stack spacing={3}>
             <Typography variant="h2">{fake.data.program.name}</Typography>
             <Typography variant="h4" color="textSecondary">
-              High level program summary
+              {fake.data.program.program_type_name}
             </Typography>
             <Grid container spacing={3}>
               <Grid sm={12}>

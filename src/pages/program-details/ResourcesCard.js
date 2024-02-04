@@ -31,7 +31,7 @@ const ResourcesCard = (props) => {
             <>
               <Divider component="li" />
               <ListItem>
-                <Typography sx={{ minWidth: '180px' }} color="textSecondary">
+                <Typography sx={{ minWidth: '150px' }} color="textSecondary">
                   Authority Code:
                 </Typography>
                 <Typography variant="h5">{props.authorityCode}</Typography>
@@ -42,7 +42,7 @@ const ResourcesCard = (props) => {
             <>
               <Divider component="li" />
               <ListItem>
-                <Typography sx={{ minWidth: '180px' }} color="textSecondary">
+                <Typography sx={{ minWidth: '150px' }} color="textSecondary">
                   Utiltiy:
                 </Typography>
                 <Typography variant="h5">{props.utilityName}</Typography>

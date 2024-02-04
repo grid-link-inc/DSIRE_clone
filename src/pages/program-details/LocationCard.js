@@ -9,7 +9,7 @@ const LocationCard = (props) => {
       <CardContent sx={{ padding: 0 }}>
         <List>
           <ListItem>
-            <Typography color="textSecondary" sx={{ minWidth: '180px' }}>
+            <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
               State:
             </Typography>
             <Typography variant="h5">{props.state}</Typography>
@@ -18,7 +18,7 @@ const LocationCard = (props) => {
             <>
               <Divider component="li" />
               <ListItem>
-                <Typography color="textSecondary" sx={{ minWidth: '180px' }}>
+                <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   County:
                 </Typography>
                 <Typography variant="h5">{props.county}</Typography>
@@ -29,7 +29,7 @@ const LocationCard = (props) => {
             <>
               <Divider component="li" />
               <ListItem>
-                <Typography color="textSecondary" sx={{ minWidth: '180px' }}>
+                <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   City:
                 </Typography>
                 <Typography variant="h5">{props.city}</Typography>
@@ -40,7 +40,7 @@ const LocationCard = (props) => {
             <>
               <Divider component="li" />
               <ListItem>
-                <Typography color="textSecondary" sx={{ minWidth: '180px' }}>
+                <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   Zip:
                 </Typography>
                 <Typography variant="h5">{props.zip}</Typography>

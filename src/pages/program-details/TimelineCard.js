@@ -1,8 +1,6 @@
 import { Card, CardContent, CardHeader, List, ListItem, Divider, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
-// TODO apply sx={{ minWidth: '180px' }} to all Typography components
-// TODO apply sx={{ display: 'flex' }} to all ListItem components
 const TimelineCard = (props) => {
   return (
     <Card>
@@ -13,7 +11,7 @@ const TimelineCard = (props) => {
           {props.startDate && (
             <>
               <ListItem>
-                <Typography color="textSecondary" sx={{ minWidth: '180px' }}>
+                <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   Start Date:
                 </Typography>
                 <Typography variant="h5">{props.startDate.toDateString()}</Typography>
@@ -24,7 +22,7 @@ const TimelineCard = (props) => {
             <>
               <Divider component="li" />
               <ListItem>
-                <Typography color="textSecondary" sx={{ minWidth: '180px' }}>
+                <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   End Date:
                 </Typography>
                 <Typography variant="h5">{props.endDate.toDateString()}</Typography>
