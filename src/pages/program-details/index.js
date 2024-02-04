@@ -10,7 +10,7 @@ import LocationCard from './LocationCard';
 import ResourcesCard from './ResourcesCard';
 import TimelineCard from './TimelineCard';
 import DescriptionCard from './DescriptionCard';
-import { Box, Container, Stack } from '@mui/material';
+import { Box, Container, Divider, Stack } from '@mui/material';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
@@ -108,38 +108,39 @@ const ProgramDetails = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 5,
+          px: 2
         }}
       >
         <Container maxWidth="false">
-          <Stack spacing={3}>
-            <Grid container spacing={3}>
-              <Grid sm={12}>
+          <Grid container spacing={4}>
+            <Grid sm={12}>
+              <Stack spacing={2}>
                 <Typography variant="h2">{program.name}</Typography>
                 <Typography variant="h4" color="textSecondary">
                   {program.program_type_name}
                 </Typography>
-              </Grid>
-
-              <Grid sm={12} md={6} lg={4}>
-                <LocationCard state={program.state_name} county={program.county_name} city={program.city_name} zip={program.zipcode} />
-              </Grid>
-              <Grid sm={12} md={6} lg={4}>
-                <ResourcesCard
-                  programWebsite={program.websiteurl}
-                  authorityCode={program.authority_code}
-                  authorityWebsite={program.authority_websiteurl}
-                  utilityName={program.utility_name}
-                />
-              </Grid>
-              <Grid sm={12} md={6} lg={4}>
-                <TimelineCard startDate={start} endDate={end} />
-              </Grid>
-              <Grid sm={12}>
-                <DescriptionCard descriptionHTMLString={program.summary} />
-              </Grid>
+                <Divider />
+              </Stack>
             </Grid>
-          </Stack>
+            <Grid sm={12} md={6} lg={4}>
+              <LocationCard state={program.state_name} county={program.county_name} city={program.city_name} zip={program.zipcode} />
+            </Grid>
+            <Grid sm={12} md={6} lg={4}>
+              <ResourcesCard
+                programWebsite={program.websiteurl}
+                authorityCode={program.authority_code}
+                authorityWebsite={program.authority_websiteurl}
+                utilityName={program.utility_name}
+              />
+            </Grid>
+            <Grid sm={12} md={6} lg={4}>
+              <TimelineCard startDate={start} endDate={end} />
+            </Grid>
+            <Grid sm={12}>
+              <DescriptionCard descriptionHTMLString={program.summary} />
+            </Grid>
+          </Grid>
         </Container>
       </Box>
     </MainCard>
