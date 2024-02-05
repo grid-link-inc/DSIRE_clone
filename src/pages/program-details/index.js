@@ -10,6 +10,7 @@ import LocationCard from './LocationCard';
 import ResourcesCard from './ResourcesCard';
 import TimelineCard from './TimelineCard';
 import DescriptionCard from './DescriptionCard';
+import DetailsCard from './DetailsCard';
 import { Box, Container, Divider, Stack } from '@mui/material';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
@@ -85,17 +86,21 @@ const ProgramDetails = () => {
   const [program, setProgram] = useState(null);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
+  const [details, setDetails] = useState(null);
 
   useEffect(() => {
     const functions = getFunctions();
     const getProgram = httpsCallable(functions, 'get_program');
+    const getProgramDetails = httpsCallable(functions, 'get_program_details');
     getProgram({ id: id }).then((result) => {
-      console.log(result);
       let program = result.data.program;
       // program = fake.data.program;
       setProgram(program);
       setStart(squashStartDates(program.authority_effective_date, program.authority_effective_text, program.start_date));
       setEnd(squashEndDates(program.authority_expired_date, program.authority_expired_text, program.end_date));
+    });
+    getProgramDetails({ id: id }).then((result) => {
+      setDetails(result.data.program_details);
     });
   }, [id]);
 
@@ -123,6 +128,9 @@ const ProgramDetails = () => {
                 </Typography>
                 <Divider />
               </Stack>
+            </Grid>
+            <Grid sm={12} md={6} lg={4}>
+              <DetailsCard listOfDetails={details} />
             </Grid>
             <Grid sm={12} md={6} lg={4}>
               <LocationCard state={program.state_name} county={program.county_name} city={program.city_name} zip={program.zipcode} />

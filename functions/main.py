@@ -63,7 +63,7 @@ def get_programs(request: https_fn.CallableRequest):
             code=https_fn.FunctionsErrorCode.INTERNAL,
             message=(str(e))
         )
-# multiline 
+
 """
 @param {Object} request - The request object.
 {
@@ -101,7 +101,6 @@ e.g. {
 @https_fn.on_call(secrets=[PROTOTYPING_DB_PW])
 def get_program(request: https_fn.CallableRequest):
     try: 
-        print(request)
         program_id = request.data.get('id')
         db_user = 'postgres'
         db_name = 'dsire'
@@ -165,4 +164,97 @@ def program_to_dict(program_id ,program_name, program_summary , program_websiteu
         "county_name": county_name,
         "city_name": city_name,
         "zipcode": zipcode
+    }
+
+
+"""
+@param {Object} request - The request object.
+{
+    "id": <int>
+}
+
+@returns {Object} The response object.
+e.g. {
+    "data": {
+        "program_details": [
+            {
+                "display_order": 0,
+                "id": 20881,
+                "label": "Permit Fee Waiver / Reduction",
+                "program_id": 4790,
+                "template_id": 42,
+                "value": null
+            },
+            {
+                "display_order": 1,
+                "id": 20882,
+                "label": "Expedited Permitting Process",
+                "program_id": 4790,
+                "template_id": 43,
+                "value": "Buildings designed to achieve LEED Silver Certification can qualify for expedited permits."
+            },
+            {
+                "display_order": 2,
+                "id": 20883,
+                "label": "Density Bonus",
+                "program_id": 4790,
+                "template_id": 44,
+                "value": null
+            },
+        ]
+    }
+}
+"""
+@https_fn.on_call(secrets=[PROTOTYPING_DB_PW])
+def get_program_details(request: https_fn.CallableRequest):
+    try: 
+        program_id = request.data.get('id')
+        db_user = 'postgres'
+        db_name = 'dsire'
+        db_pass = PROTOTYPING_DB_PW.value
+        db_connection_name = "double-runway-412322:us-west1:prototyping-db"
+
+        # initialize Connector object
+        connector = Connector()
+
+        # function to return the database connection object
+        def getconn():
+            conn = connector.connect(
+                db_connection_name,
+                "pg8000",
+                user=db_user,
+                password=db_pass,
+                db=db_name
+            )
+            return conn
+
+        # create connection pool with 'creator' argument to our connection object function
+        pool = sqlalchemy.create_engine(
+            "postgresql+pg8000://",
+            creator=getconn,
+        )
+        with pool.connect() as db_conn:
+            results = db_conn.execute(sqlalchemy.text("""
+                SELECT *
+                FROM program_detail
+                WHERE program_id = {id};
+            """.format(id=program_id))).fetchall()
+
+            rows = [program_details_to_dict(*row) for row in results]
+            return {"program_details": rows}
+    except Exception as e:
+        print(e)
+        raise https_fn.HttpsError(
+            code=https_fn.FunctionsErrorCode.INTERNAL,
+            message=(str(e))
+        )
+    
+def program_details_to_dict(id, program_id, label, value, display_order, template_id):
+    return {
+        "id": id,
+        "program_id": program_id,
+        "label": label,
+        "value": value,
+        "display_order": display_order,
+        "template_id": template_id
     }
