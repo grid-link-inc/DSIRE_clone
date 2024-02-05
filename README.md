@@ -130,11 +130,23 @@ Please generate a [GitHub issue](https://github.com/codedthemes/mantis-free-reac
 - Facebook [https://www.facebook.com/codedthemes](https://www.facebook.com/codedthemes)
 - Twitter [https://twitter.com/codedthemes](https://twitter.com/codedthemes)
 
-
 ## Project setup steps
+
 https://firebase.google.com/docs/web/setup
 
 ## Hosting
+
 https://firebase.google.com/docs/hosting
 
+### Firebase
+
+yarn
+yarn build
 firebase emulators:start
+http://127.0.0.1:5000/
+
+### yarn
+
+yarn
+yarn start
+http://localhost:3000/programs/4790
