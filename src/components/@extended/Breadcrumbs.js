@@ -11,21 +11,28 @@ import MainCard from '../MainCard';
 
 // ==============================|| BREADCRUMBS ||============================== //
 
+// Limitations
+// - the 'navigation' data structure is used to define both the sidebar items AND breadcrumbs here.
+// but they're used differently in nav and breadcrumbs which forced the original implementer to use flags like the 'breadcrumb' flag,
+// and now me to make a 'showOnNavBar' flag. Need a better way to define routes/nav/breadcrumbs
+// - the 'navigation' data structure shadows Routes. So you have to update both when you add a new page
+// - this breadcrumb component is only made to do one layer deep of navigation. Not enough
+
 const Breadcrumbs = ({ navigation, title, ...others }) => {
   const location = useLocation();
   const [main, setMain] = useState();
   const [item, setItem] = useState();
 
   // set active item state
-  const getCollapse = (menu) => {
+  const findNavItemThatMatchesCurrentLocationURL = (menu) => {
     if (menu.children) {
-      menu.children.filter((collapse) => {
-        if (collapse.type && collapse.type === 'collapse') {
-          getCollapse(collapse);
-        } else if (collapse.type && collapse.type === 'item') {
-          if (location.pathname === collapse.url) {
+      menu.children.filter((menuChild) => {
+        if (menuChild.type && menuChild.type === 'collapse') {
+          findNavItemThatMatchesCurrentLocationURL(menuChild);
+        } else if (menuChild.type && menuChild.type === 'item') {
+          if (location.pathname === menuChild.url) {
             setMain(menu);
-            setItem(collapse);
+            setItem(menuChild);
           }
         }
         return false;
@@ -36,16 +43,11 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
   useEffect(() => {
     navigation?.items?.map((menu) => {
       if (menu.type && menu.type === 'group') {
-        getCollapse(menu);
+        findNavItemThatMatchesCurrentLocationURL(menu);
       }
       return false;
     });
   });
-
-  // only used for component demo breadcrumbs
-  if (location.pathname === '/breadcrumbs') {
-    location.pathname = '/dashboard/analytics';
-  }
 
   let mainContent;
   let itemContent;
