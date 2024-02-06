@@ -83,28 +83,22 @@ const parseDate = (maybeDateString) => {
 const ProgramDetails = () => {
   let { id } = useParams();
 
-  const [program, setProgram] = useState(null);
+  const [programData, setProgramData] = useState(null);
   const [start, setStart] = useState(null);
   const [end, setEnd] = useState(null);
-  const [details, setDetails] = useState(null);
 
   useEffect(() => {
     const functions = getFunctions();
-    const getProgram = httpsCallable(functions, 'get_program');
-    const getProgramDetails = httpsCallable(functions, 'get_program_details');
-    getProgram({ id: id }).then((result) => {
-      let program = result.data.program;
-      // program = fake.data.program;
-      setProgram(program);
-      setStart(squashStartDates(program.authority_effective_date, program.authority_effective_text, program.start_date));
-      setEnd(squashEndDates(program.authority_expired_date, program.authority_expired_text, program.end_date));
-    });
-    getProgramDetails({ id: id }).then((result) => {
-      setDetails(result.data.program_details);
+    const get_program_enriched = httpsCallable(functions, 'get_program_enriched');
+    get_program_enriched({ id: id }).then((result) => {
+      console.log('get_program_enriched', result);
+      setProgramData(result.data);
+      // setStart(squashStartDates(program.authority_effective_date, program.authority_effective_text, program.start_date));
+      // setEnd(squashEndDates(program.authority_expired_date, program.authority_expired_text, program.end_date));
     });
   }, [id]);
 
-  if (!program) {
+  if (!programData) {
     return null;
   }
 
@@ -122,32 +116,32 @@ const ProgramDetails = () => {
           <Grid container spacing={4}>
             <Grid sm={12}>
               <Stack spacing={2}>
-                <Typography variant="h2">{program.name}</Typography>
+                <Typography variant="h2">{programData.program.name}</Typography>
                 <Typography variant="h4" color="textSecondary">
-                  {program.program_type_name}
+                  {programData.program_type_name}
                 </Typography>
                 <Divider />
               </Stack>
             </Grid>
             <Grid sm={12} md={6} lg={4}>
-              <DetailsCard listOfDetails={details} />
+              <DetailsCard listOfDetails={programData.details} />
             </Grid>
             <Grid sm={12} md={6} lg={4}>
-              <LocationCard state={program.state_name} county={program.county_name} city={program.city_name} zip={program.zipcode} />
+              <LocationCard state={programData.program.state} county={'TODO'} city={'TODO'} zip={'TODO'} />
             </Grid>
             <Grid sm={12} md={6} lg={4}>
               <ResourcesCard
-                programWebsite={program.websiteurl}
-                authorityCode={program.authority_code}
-                authorityWebsite={program.authority_websiteurl}
-                utilityName={program.utility_name}
+                programWebsite={programData.program.website}
+                authorityCode={'TODO-authorityCode'}
+                authorityWebsite={'TODO-authorityWebsite'}
+                utilityName={'TODO-utilityName'}
               />
             </Grid>
             <Grid sm={12} md={6} lg={4}>
               <TimelineCard startDate={start} endDate={end} />
             </Grid>
             <Grid sm={12}>
-              <DescriptionCard descriptionHTMLString={program.summary} />
+              <DescriptionCard descriptionHTMLString={programData.program.summary} />
             </Grid>
           </Grid>
         </Container>
