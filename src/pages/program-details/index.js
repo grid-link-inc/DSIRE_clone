@@ -11,6 +11,7 @@ import ResourcesCard from './ResourcesCard';
 import TimelineCard from './TimelineCard';
 import DescriptionCard from './DescriptionCard';
 import DetailsCard from './DetailsCard';
+import ContactsCard from './ContactsCard';
 import { Box, Container, Divider, Stack } from '@mui/material';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
@@ -125,6 +126,9 @@ const ProgramDetails = () => {
             </Grid>
             <Grid sm={12} md={6} lg={4}>
               <DetailsCard listOfDetails={programData.details} />
+            </Grid>
+            <Grid sm={12} md={6} lg={4}>
+              <ContactsCard contacts={programData.contacts} />
             </Grid>
             <Grid sm={12} md={6} lg={4}>
               <LocationCard state={programData.program.state} county={'TODO'} city={'TODO'} zip={'TODO'} />

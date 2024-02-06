@@ -26,7 +26,6 @@ const DetailsCard = (props) => {
       <CardContent sx={{ padding: 0 }}>
         <List>{detailsListItems(props.listOfDetails)}</List>
       </CardContent>
-      <Divider />
     </Card>
   );
 };
