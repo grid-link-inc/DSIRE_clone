@@ -31,8 +31,6 @@ const geographicRegion = (state, cities) => {
     return 'USA';
   }
   let region = '';
-  // check if cities empty
-  console.log('cities', cities);
   if (cities.length > 0) {
     region += cities[0].name;
   }
@@ -51,7 +49,6 @@ const geographicRegion = (state, cities) => {
 };
 
 const ApplicabilityCard = (props) => {
-  console.log(props);
   const startDate = props.startDate ? new Date(props.startDate).toDateString() : 'N/A';
   const endDate = props.endDate ? new Date(props.endDate).toDateString() : 'N/A';
   return (

@@ -18,7 +18,6 @@ const detailsListItems = (details) => {
 }
 
 const DetailsCard = (props) => {
-  console.log('DetailsCard', props);
   return (
     <Card>
       <CardHeader title="Details" />

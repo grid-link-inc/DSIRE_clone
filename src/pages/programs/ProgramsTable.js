@@ -871,7 +871,6 @@ export default function ProgramTable() {
     const functions = getFunctions();
     const getPrograms = httpsCallable(functions, 'get_programs');
     getPrograms({}).then((result) => {
-      console.log(result);
       const data = result.data.programs;
       let rows = data.map((row) => createData(...row));
       setRows(rows);

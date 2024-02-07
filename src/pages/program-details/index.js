@@ -138,48 +138,11 @@ const fake_data = {
   }
 };
 
-const squashStartDates = (authorityEffectiveDate, authorityEffectiveText, startDate) => {
-  let start = null;
-  if (start) {
-    start = parseDate(startDate);
-  }
-  if (!start && authorityEffectiveDate) {
-    start = parseDate(authorityEffectiveDate);
-  }
-  if (!start && authorityEffectiveText) {
-    start = parseDate(authorityEffectiveText);
-  }
-  return start;
-};
-
-const squashEndDates = (authorityExpiredDate, authorityExpiredText, endDate) => {
-  let end = null;
-  if (endDate) {
-    end = parseDate(endDate);
-  }
-  if (!end && authorityExpiredDate) {
-    end = parseDate(authorityExpiredDate);
-  }
-  if (!end && authorityExpiredText) {
-    end = parseDate(authorityExpiredText);
-  }
-  return end;
-};
-
-const parseDate = (maybeDateString) => {
-  const date = new Date(maybeDateString);
-  if (isNaN(date.getTime())) {
-    return null;
-  }
-  return date;
-};
-
 const ProgramDetails = () => {
   let { id } = useParams();
 
   const [programData, setProgramData] = useState(fake_data.data);
-  const [start, setStart] = useState(null);
-  const [end, setEnd] = useState(null);
+
 
   // useEffect(() => {
   //   const functions = getFunctions();
@@ -230,24 +193,19 @@ const ProgramDetails = () => {
               />
             </Grid>
             <Grid sm={12} md={6} lg={4}>
-              <DetailsCard listOfDetails={programData.details} />
-            </Grid>
-            <Grid sm={12} md={6} lg={4}>
               <ContactsCard contacts={programData.contacts} />
             </Grid>
-            {/* <Grid sm={12} md={6} lg={4}>
-              <LocationCard state={programData.program.state} county={'TODO'} city={'TODO'} zip={'TODO'} />
-            </Grid> */}
             <Grid sm={12} md={6} lg={4}>
               <ResourcesCard
                 programWebsite={programData.program.website}
                 authorityCode={'TODO-authorityCode'}
                 authorityWebsite={'TODO-authorityWebsite'}
                 utilityName={'TODO-utilityName'}
+                authorities={programData.authorities}
               />
             </Grid>
             <Grid sm={12} md={6} lg={4}>
-              <TimelineCard startDate={start} endDate={end} />
+              <DetailsCard listOfDetails={programData.details} />
             </Grid>
             <Grid sm={12}>
               <DescriptionCard descriptionHTMLString={programData.program.summary} />

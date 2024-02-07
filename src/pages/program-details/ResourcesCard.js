@@ -1,15 +1,54 @@
-import { Card, CardContent, CardHeader, Link, List, ListItem, Divider, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader, Link, List, ListItem, Divider, Stack, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
+const documentsSection = (docs) => {
+  if (docs.length === 0) {
+    return null;
+  }
+
+  const documentsList = docs.map((doc) => {
+    const docElement = doc.website ? (
+      <Link href={doc.website} target="_blank" rel="noreferrer">
+        {doc.code}
+      </Link>
+    ) : (
+      doc.code
+    );
+    return (
+      <ListItem key={doc.id}>
+        <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
+          {docElement}:
+        </Typography>
+        {/* TODO add rest of authority fields: 
+          effective, effectivetext, enacted, enactedtext, expired, expiredtext, file_key, file_name
+        */}
+      </ListItem>
+    );
+  });
+
+  return (
+    <>
+      <Divider component="li" />
+      <ListItem key="documents-header">
+        <Typography variant="h6">Program Documents</Typography>
+      </ListItem>
+      <ListItem key="documents">
+        <Stack spacing={0}>{documentsList}</Stack>
+      </ListItem>
+    </>
+  );
+};
+
 const ResourcesCard = (props) => {
+  console.log('ResourcesCard', props);
   return (
     <Card>
       <CardHeader title="Resources" subheader="Learn more about this program." />
-      <Divider />
       <CardContent sx={{ padding: 0 }}>
         <List>
           {props.programWebsite && (
             <>
+              <Divider component="li" />
               <ListItem>
                 <Link href={props.programWebsite} target="_blank" rel="noopener noreferrer">
                   Program Website
@@ -17,38 +56,7 @@ const ResourcesCard = (props) => {
               </ListItem>
             </>
           )}
-          {props.authorityWebsite && (
-            <>
-              <Divider component="li" />
-              <ListItem>
-                <Link href={props.authorityWebsite} target="_blank" rel="noopener noreferrer">
-                  Authority Website
-                </Link>
-              </ListItem>
-            </>
-          )}
-          {props.authorityCode && (
-            <>
-              <Divider component="li" />
-              <ListItem>
-                <Typography sx={{ minWidth: '150px' }} color="textSecondary">
-                  Authority Code:
-                </Typography>
-                <Typography variant="h5">{props.authorityCode}</Typography>
-              </ListItem>
-            </>
-          )}
-          {props.utilityName && (
-            <>
-              <Divider component="li" />
-              <ListItem>
-                <Typography sx={{ minWidth: '150px' }} color="textSecondary">
-                  Utiltiy:
-                </Typography>
-                <Typography variant="h5">{props.utilityName}</Typography>
-              </ListItem>
-            </>
-          )}
+          {documentsSection(props.authorities)}
         </List>
       </CardContent>
       <Divider />
@@ -60,7 +68,8 @@ ResourcesCard.propTypes = {
   programWebsite: PropTypes.string,
   authorityCode: PropTypes.string,
   authorityWebsite: PropTypes.string,
-  utilityName: PropTypes.string
+  utilityName: PropTypes.string,
+  authorities: PropTypes.array
 };
 
 export default ResourcesCard;
