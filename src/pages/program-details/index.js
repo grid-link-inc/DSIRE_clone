@@ -14,7 +14,6 @@ import DetailsCard from './DetailsCard';
 import ContactsCard from './ContactsCard';
 import ApplicabilityCard from './ApplicabilityCard';
 import { Box, Container, Divider, Stack } from '@mui/material';
-import { program } from '../../../../../Library/Caches/typescript/5.3/node_modules/@babel/types/lib/index';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
@@ -141,19 +140,17 @@ const fake_data = {
 const ProgramDetails = () => {
   let { id } = useParams();
 
-  const [programData, setProgramData] = useState(fake_data.data);
+  const [programData, setProgramData] = useState(null);
+  // const [programData, setProgramData] = useState(fake_data.data);
 
-
-  // useEffect(() => {
-  //   const functions = getFunctions();
-  //   const get_program_enriched = httpsCallable(functions, 'get_program_enriched');
-  //   get_program_enriched({ id: id }).then((result) => {
-  //     console.log('get_program_enriched', result);
-  //     setProgramData(result.data);
-  //     // setStart(squashStartDates(program.authority_effective_date, program.authority_effective_text, program.start_date));
-  //     // setEnd(squashEndDates(program.authority_expired_date, program.authority_expired_text, program.end_date));
-  //   });
-  // }, [id]);
+  useEffect(() => {
+    const functions = getFunctions();
+    const get_program_enriched = httpsCallable(functions, 'get_program_enriched');
+    get_program_enriched({ id: id }).then((result) => {
+      console.log('get_program_enriched', result);
+      setProgramData(result.data);
+    });
+  }, [id]);
 
   if (!programData) {
     return null;
@@ -166,7 +163,8 @@ const ProgramDetails = () => {
         sx={{
           flexGrow: 1,
           py: 5,
-          px: 2
+          px: 2,
+          background: 'E4F4EF' // FIXME: use theme
         }}
       >
         <Container maxWidth="false">
@@ -196,13 +194,7 @@ const ProgramDetails = () => {
               <ContactsCard contacts={programData.contacts} />
             </Grid>
             <Grid sm={12} md={6} lg={4}>
-              <ResourcesCard
-                programWebsite={programData.program.website}
-                authorityCode={'TODO-authorityCode'}
-                authorityWebsite={'TODO-authorityWebsite'}
-                utilityName={'TODO-utilityName'}
-                authorities={programData.authorities}
-              />
+              <ResourcesCard programWebsite={programData.program.website} authorities={programData.authorities} />
             </Grid>
             <Grid sm={12} md={6} lg={4}>
               <DetailsCard listOfDetails={programData.details} />

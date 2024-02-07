@@ -30,7 +30,7 @@ export default function ComponentsOverrides(theme) {
     IconButton(theme),
     InputLabel(theme),
     LinearProgress(),
-    Link(),
+    Link(theme),
     ListItemIcon(),
     OutlinedInput(theme),
     Tab(theme),

@@ -25,11 +25,32 @@ const Theme = (colors) => {
 
   return {
     primary: {
-      main: '#bbddd3',
+      lighter: blue[0],
+      100: blue[1],
+      200: blue[2],
+      light: blue[3],
+      400: blue[4],
+      main: blue[5],
+      dark: blue[6],
+      700: blue[7],
+      darker: blue[8],
+      900: blue[9],
       contrastText
     },
     secondary: {
-      main: '#ff3f83',
+      lighter: greyColors[100],
+      100: greyColors[100],
+      200: greyColors[200],
+      light: greyColors[300],
+      400: greyColors[400],
+      main: greyColors[500],
+      600: greyColors[600],
+      dark: greyColors[700],
+      800: greyColors[800],
+      darker: greyColors[900],
+      A100: greyColors[0],
+      A200: greyColors.A400,
+      A300: greyColors.A700,
       contrastText: greyColors[0]
     },
     error: {
@@ -63,10 +84,6 @@ const Theme = (colors) => {
       dark: green[7],
       darker: green[9],
       contrastText
-    },
-    background: {
-      default: '#eef1f0',
-      paper: '#f7fbf9'
     },
     grey: greyColors
   };

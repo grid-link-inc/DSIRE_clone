@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, List, ListItem, Divider, Typography, Link } from '@mui/material';
 import PropTypes from 'prop-types';
-import { Stack } from '../../../node_modules/@mui/material/index';
+import { Stack } from '@mui/material/index';
+import { useTheme } from '@mui/material/styles';
 
 const contactsListItems = (contacts) => {
   if (!contacts) {
@@ -10,15 +11,17 @@ const contactsListItems = (contacts) => {
     const isLastItem = index === contacts.length - 1;
     return [
       <ListItem key={contact.id}>
-        <Stack spacing={0.2}>
+        <Stack spacing={0.3}>
           <Typography>
             {contact.first_name} {contact.last_name}
           </Typography>
           <Typography>{contact.organization_name}</Typography>
           <Typography>{formatPhoneNumber(contact.phone)}</Typography>
-          <Link href={contact.website} target="_blank" rel="noreferrer">
-            Website
-          </Link>
+          {contact.website_url && (
+            <Link href={contact.website_url} target="_blank" rel="noopener noreferrer">
+              Website
+            </Link>
+          )}
         </Stack>
       </ListItem>,
       !isLastItem && <Divider key={`divider-${contact.id}`} />
@@ -27,10 +30,10 @@ const contactsListItems = (contacts) => {
 };
 
 const ContactsCard = (props) => {
+  const theme = useTheme();
   return (
     <Card>
-      <CardHeader title="Contact" />
-      <Divider />
+      <CardHeader title="Contact" sx={{ background: theme.palette.primary.main }} />
       <CardContent sx={{ padding: 0 }}>
         <List>{contactsListItems(props.contacts)}</List>
       </CardContent>

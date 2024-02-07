@@ -48,7 +48,11 @@ const Palette = (mode) => {
       action: {
         disabled: paletteColor.grey[300]
       },
-      divider: paletteColor.grey[200]
+      divider: paletteColor.grey[200],
+      background: {
+        paper: paletteColor.grey[0],
+        default: paletteColor.grey.A50
+      }
     }
   });
 };

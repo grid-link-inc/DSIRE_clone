@@ -9,20 +9,13 @@ const cleanHTML = (html) => {
   return DOMPurify.sanitize(html);
 };
 
-const _lightGreenGrey_ = '#EEF1F0';
-
 const DescriptionCard = (props) => {
   const descriptionHTML = cleanHTML(props.descriptionHTMLString);
 
   <div dangerouslySetInnerHTML={{ __html: descriptionHTML }} />;
 
   return (
-    <Card
-      sx={{
-        boxShadow: 0,
-        backgroundColor: _lightGreenGrey_
-      }}
-    >
+    <Card sx={{ boxShadow: 0 }}>
       <CardContent>
         <Typography variant="h5">Description</Typography>
         <div dangerouslySetInnerHTML={{ __html: descriptionHTML }} />

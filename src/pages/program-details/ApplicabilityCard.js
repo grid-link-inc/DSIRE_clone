@@ -2,29 +2,9 @@ import PropTypes from 'prop-types';
 
 import { Card, CardContent, CardHeader, List, ListItem, Divider, Typography, Tooltip } from '@mui/material';
 import Zoom from '@mui/material/Zoom';
-import IconButton from '@mui/material/IconButton';
 import HelpIcon from '@mui/icons-material/Help';
-// Type card contents:
-// state
-// sector: resi
-// implementor: utility
-// managing entity: Utility corp inc
-// category
-// type
 
-// Applicability
-// geographic area
-// category
-// type
-// timeline
-// start date
-// end date
-
-// Administrator
-// type
-// name
-// contact info?
-// - website
+import { useTheme } from '@mui/material/styles';
 
 const geographicRegion = (state, cities) => {
   if (state == 'federal') {
@@ -51,14 +31,16 @@ const geographicRegion = (state, cities) => {
 const ApplicabilityCard = (props) => {
   const startDate = props.startDate ? new Date(props.startDate).toDateString() : 'N/A';
   const endDate = props.endDate ? new Date(props.endDate).toDateString() : 'N/A';
+
+  const theme = useTheme();
   return (
     <Card>
-      <CardHeader title="Applicability" />
-      <Divider />
+      <CardHeader title="Applicability" sx={{ background: theme.palette.primary.main }} />
       <CardContent sx={{ padding: 0 }}>
-        <List>
+        <List sx={{ padding: 0 }}>
           {props.category && (
             <>
+              <Divider component="li" />
               <ListItem>
                 <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   Category:
@@ -69,19 +51,21 @@ const ApplicabilityCard = (props) => {
           )}
           {props.type && (
             <>
+              <Divider component="li" />
               <ListItem>
                 <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   Type:
                 </Typography>
                 <Typography variant="h5">{props.type}</Typography>
                 <Tooltip title="Type of program" TransitionComponent={Zoom} arrow>
-                  <HelpIcon color="secondary" sx={{ fontSize: 17, marginLeft: 1 }} />
+                  <HelpIcon color="grey" sx={{ fontSize: 17, marginLeft: 1 }} />
                 </Tooltip>
               </ListItem>
             </>
           )}
           {(props.state || props.cities) && (
             <>
+              <Divider component="li" />
               <ListItem>
                 <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   Geographic Area:
@@ -90,6 +74,7 @@ const ApplicabilityCard = (props) => {
               </ListItem>
             </>
           )}
+          <Divider component="li" />
           <ListItem>
             <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
               Start Date:

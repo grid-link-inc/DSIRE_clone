@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, Link, List, ListItem, Divider, Stack, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useTheme } from '@mui/material/styles';
 
 const documentsSection = (docs) => {
   if (docs.length === 0) {
@@ -40,12 +41,12 @@ const documentsSection = (docs) => {
 };
 
 const ResourcesCard = (props) => {
-  console.log('ResourcesCard', props);
+  const theme = useTheme();
   return (
     <Card>
-      <CardHeader title="Resources" subheader="Learn more about this program." />
+      <CardHeader title="Resources" sx={{ background: theme.palette.primary.main }} />
       <CardContent sx={{ padding: 0 }}>
-        <List>
+        <List sx={{ padding: 0 }}>
           {props.programWebsite && (
             <>
               <Divider component="li" />
