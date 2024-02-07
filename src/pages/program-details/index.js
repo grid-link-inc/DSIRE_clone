@@ -141,7 +141,6 @@ const ProgramDetails = () => {
   let { id } = useParams();
 
   const [programData, setProgramData] = useState(null);
-  // const [programData, setProgramData] = useState(fake_data.data);
 
   useEffect(() => {
     const functions = getFunctions();
@@ -163,7 +162,7 @@ const ProgramDetails = () => {
         sx={{
           flexGrow: 1,
           py: 5,
-          px: 2,
+          px: 5,
           background: 'E4F4EF' // FIXME: use theme
         }}
       >
@@ -178,26 +177,26 @@ const ProgramDetails = () => {
                 <Divider />
               </Stack>
             </Grid>
-            <Grid sm={12} md={6} lg={4}>
-              <ApplicabilityCard
-                state={programData.program.state}
-                counties={programData.counties}
-                cities={programData.cities}
-                zips={programData.zipcodes}
-                category={programData.program.category}
-                type={programData.program.type}
-                startDate={programData.program.start_date}
-                endDate={programData.program.end_date}
-              />
+            <Grid sm={12} md={6}>
+              <Stack spacing={4}>
+                <ApplicabilityCard
+                  state={programData.program.state}
+                  counties={programData.counties}
+                  cities={programData.cities}
+                  zips={programData.zipcodes}
+                  category={programData.program.category}
+                  type={programData.program.type}
+                  startDate={programData.program.start_date}
+                  endDate={programData.program.end_date}
+                />
+                <ResourcesCard programWebsite={programData.program.website} authorities={programData.authorities} />
+              </Stack>
             </Grid>
-            <Grid sm={12} md={6} lg={4}>
-              <ContactsCard contacts={programData.contacts} />
-            </Grid>
-            <Grid sm={12} md={6} lg={4}>
-              <ResourcesCard programWebsite={programData.program.website} authorities={programData.authorities} />
-            </Grid>
-            <Grid sm={12} md={6} lg={4}>
-              <DetailsCard listOfDetails={programData.details} />
+            <Grid sm={12} md={6}>
+              <Stack spacing={4}>
+                <ContactsCard contacts={programData.contacts} />
+                <DetailsCard listOfDetails={programData.details} />
+              </Stack>
             </Grid>
             <Grid sm={12}>
               <DescriptionCard descriptionHTMLString={programData.program.summary} />
