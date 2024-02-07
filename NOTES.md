@@ -33,7 +33,7 @@ env vars for secrets - not necessary: https://firebase.google.com/docs/projects/
 squash commits
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCmQRbYZnyFurr3yx3o88Wm-TXNdVhkzTk",
+    apiKey: "xxxx",
     authDomain: "policy-db.firebaseapp.com",
     projectId: "policy-db",
     storageBucket: "policy-db.appspot.com",
