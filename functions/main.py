@@ -495,7 +495,72 @@ def fetch_program_info(db_conn, program_id):
 #     print("fetch_all, result", result)
 #     return result.fetchall()
 
+"""
+details_query()
 
+Known labels: 
+Aggregate Capacity Limit
+Alternative Compliance Payment
+Applicable Utilities
+Availability
+Carryover Provisions
+Certification Requirements
+Charge
+Code Change Cycle
+Commercial Code
+Compliance Multipliers
+Credit Trading/Tracking System
+Density Bonus
+Distribution and Frequency
+Duration
+Electric Peak Demand Reduction
+Electric Sales Reduction
+Eligible System Size
+Emissions
+Energy Reduction Goal/Requirement
+Equipment Efficiency Requirement
+Equipment Requirements
+Expedited Permitting Process
+External Disconnect Switch
+Fuel Mix
+Green Building Requirement
+Implementing Agency
+Incentive Amount
+Installation Requirements
+Insurance Requirements
+Interest Rate
+Jurisdictions
+Loan Term
+Low-Moderate Income Provisions
+Maximum Incentive
+Maximum Loan
+Meter Aggregation
+Natural Gas Sales Reduction
+Net Excess Generation
+Net Metering Required
+Ownership of Renewable Energy Credits
+Participant Credit Rate
+Permit Fee Waiver / Reduction
+Program Capacity Limit
+Rate Impact Parameters
+REC Lifetime
+Renewable Energy Requirement
+Renewables % or Amount
+Requirements
+Residential Code
+Review
+Service
+Source
+Standard
+Standard Agreement
+Standard Format Required
+System Capacity Limit
+Technology Minimum
+Terms
+Test Methods
+Total Fund
+Types
+"""
 details_query = """
 SELECT 
 id,
@@ -506,6 +571,59 @@ FROM program_detail
 WHERE program_id = {id};
 """
 
+"""
+program_query()
+Known categories:
+ Financial Incentive
+ Regulatory Policy
+
+Known types:
+ Community Solar Rules
+ Property Tax Incentive
+ Value of Solar Tariff
+ Bond Program
+ Line Extension Analysis
+ Sales Tax Incentive
+ Solar/Wind Contractor Licensing
+ Equipment Certification
+ Renewables Portfolio Standard
+ Solar Access Law/Guideline
+ Green Power Purchasing
+ Industry Recruitment/Support
+ Net Metering
+ Solar/Wind Permitting Standards
+ Personal Tax Deduction
+ Property Tax Assessment
+ Corporate Tax Credit
+ Green Building Incentive
+ Solar/Wind Access Policy
+ Corporate Depreciation
+ Utility Rate Discount
+ Solar Renewable Energy Credit Program
+ Feed-in Tariff
+ Interconnection
+ Other Policy
+ PACE Financing
+ Other Incentive
+ Loan Program
+ Production Incentive
+ Energy Standards for Public Buildings
+ Energy Storage Target
+ Generation Disclosure
+ Mandatory Utility Green Power Option
+ Rebate Program
+ Building Energy Code
+ Personal Tax Exemption
+ Performance-Based Incentive
+ Corporate Tax Exemption
+ Leasing Program
+ Grant Program
+ Energy Efficiency Resource Standard
+ Corporate Tax Deduction
+ Appliance/Equipment Efficiency Standards
+ Personal Tax Credit
+ Public Benefits Fund
+"""
 program_query = """
 SELECT 
     program.id AS program_id,
