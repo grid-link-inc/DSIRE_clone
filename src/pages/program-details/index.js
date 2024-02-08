@@ -13,38 +13,10 @@ import DescriptionCard from './DescriptionCard';
 import DetailsCard from './DetailsCard';
 import ContactsCard from './ContactsCard';
 import ApplicabilityCard from './ApplicabilityCard';
+import ChatWidget from './ChatWidget';
 import { Box, Container, Divider, Stack } from '@mui/material';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
-
-const fake = {
-  data: {
-    program: {
-      authority_code: 'Kansas Statute 58-3801 et seq.',
-      authority_effective_date: null,
-      authority_effective_text: '7/1/2000',
-      authority_expired_date: null,
-      authority_expired_text: '12/31/2004',
-      authority_id: 268,
-      authority_websiteurl:
-        'https://www.ksrevisor.org/statutes/chapters/ch58/058_038_0001.html#:~:text=58%2D3801.,by%20such%20easement%20is%20situated.',
-      city_name: 'Kansas City',
-      county_name: 'Clay, Platte, and Cass Counties',
-      end_date: null,
-      id: 8,
-      name: 'Kansas Solar Easement Laws',
-      program_category_name: 'Regulatory Policy',
-      program_type_name: 'Solar/Wind Access Policy',
-      start_date: null,
-      state_name: 'Kansas',
-      summary:
-        '<p><span>Parties may voluntarily enter into solar easement contracts for the purpose of ensuring adequate exposure of a solar energy system. An easement must be expressed in writing and recorded with the register of deeds for that county.</span><br/></p><p></p><p>The written agreement must contain a description of the airspace in question and any term and/or conditions under which the solar easement is granted or terminated.</p><p></p>',
-      utility_name: 'PG&E',
-      websiteurl: 'www.kansas.gov',
-      zipcode: 64030
-    }
-  }
-};
 
 const fake_data = {
   data: {
@@ -138,9 +110,11 @@ const fake_data = {
 };
 
 const ProgramDetails = () => {
+  console.log('ProgramDetails');
   let { id } = useParams();
 
   const [programData, setProgramData] = useState(null);
+  // const [programData, setProgramData] = useState(fake_data.data);
 
   useEffect(() => {
     const functions = getFunctions();
@@ -157,6 +131,7 @@ const ProgramDetails = () => {
 
   return (
     <MainCard sx={{ mt: 2 }} content={false}>
+      {/* <ChatWidget /> */}
       <Box
         component="main"
         sx={{
