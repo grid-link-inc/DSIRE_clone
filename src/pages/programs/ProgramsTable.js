@@ -863,6 +863,7 @@ function CustomNoRowsOverlay() {
 
 export default function ProgramTable() {
   const [rows, setRows] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // setTimeout(() => {
@@ -874,6 +875,7 @@ export default function ProgramTable() {
       const data = result.data.programs;
       let rows = data.map((row) => createData(...row));
       setRows(rows);
+      setLoading(false);
     });
   }, []);
 
@@ -889,7 +891,7 @@ export default function ProgramTable() {
         columns={columns}
         rows={rows}
         autoHeight
-        loading={rows.length === 0}
+        loading={loading}
         pageSizeOptions={[25, 50, 100]}
         initialState={{
           pagination: { paginationModel: { pageSize: 25 } }

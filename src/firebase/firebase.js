@@ -21,21 +21,9 @@ const functions = getFunctions(app);
 // Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
 // key is the counterpart to the secret key you set in the Firebase console.
 // https://firebase.google.com/docs/app-check/web/recaptcha-provider#web-modular-api
-// initializeAppCheck(app, {
-//   provider: new ReCaptchaEnterpriseProvider('6LcGmW0pAAAAAHJJ-au6_vjcVHNCI57bCMn83w8v'), // 'policy-db.web.app' https://console.cloud.google.com/security/recaptcha/6LexO2spAAAAAGmp6tHqDo9ruSVLoBN-I1fu10K2/edit?project=policy-db&supportedpurview=project
-//   isTokenAutoRefreshEnabled: true
-// });
-// initializeAppCheck(app, {
-//   provider: new ReCaptchaEnterpriseProvider('6LexO2spAAAAAGmp6tHqDo9ruSVLoBN-I1fu10K2'), // 'policy-db.web.app' https://console.cloud.google.com/security/recaptcha/6LexO2spAAAAAGmp6tHqDo9ruSVLoBN-I1fu10K2/edit?project=policy-db&supportedpurview=project
-//   isTokenAutoRefreshEnabled: true
-// });
 initializeAppCheck(app, {
   provider: new ReCaptchaV3Provider('6LdU2G0pAAAAAE4sUMp9oUpR9JNkOjMQPfipAlhE'),
   isTokenAutoRefreshEnabled: true
 });
-// initializeAppCheck(app, {
-//   provider: new ReCaptchaV3Provider('6LexO2spAAAAAGmp6tHqDo9ruSVLoBN-I1fu10K2'),
-//   isTokenAutoRefreshEnabled: true
-// });
 
 export { app, functions };
