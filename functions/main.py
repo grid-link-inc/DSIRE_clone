@@ -8,11 +8,11 @@ import sqlalchemy
 initialize_app()
 
 PROTOTYPING_DB_PW = SecretParam('PROTOTYPING_DB_PW')
-ENFORCE_APP_CHECK=True
+ENFORCE_APP_CHECK=False
 
 @https_fn.on_call(
         secrets=[PROTOTYPING_DB_PW], 
-        # enforce_app_check=ENFORCE_APP_CHECK
+        enforce_app_check=ENFORCE_APP_CHECK
 )
 def get_programs(request: https_fn.CallableRequest):
     try: 
@@ -95,7 +95,7 @@ def program_to_dict(program_id ,program_name, program_summary , program_websiteu
 @https_fn.on_call(secrets=[PROTOTYPING_DB_PW])
 def get_program_enriched(
     request: https_fn.CallableRequest,
-    # enforce_app_check=ENFORCE_APP_CHECK
+    enforce_app_check=ENFORCE_APP_CHECK
 ):
     try: 
         program_id = request.data.get('id')
