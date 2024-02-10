@@ -110,7 +110,6 @@ const fake_data = {
 };
 
 const ProgramDetails = () => {
-  console.log('ProgramDetails');
   let { id } = useParams();
 
   const [programData, setProgramData] = useState(null);
@@ -120,7 +119,6 @@ const ProgramDetails = () => {
     const functions = getFunctions();
     const get_program_enriched = httpsCallable(functions, 'get_program_enriched');
     get_program_enriched({ id: id }).then((result) => {
-      console.log('get_program_enriched', result);
       setProgramData(result.data);
     });
   }, [id]);

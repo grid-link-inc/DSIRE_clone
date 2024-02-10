@@ -41,7 +41,7 @@ const ApplicabilityCard = (props) => {
           {props.category && (
             <>
               <Divider component="li" />
-              <ListItem>
+              <ListItem id="category">
                 <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   Category:
                 </Typography>
@@ -51,8 +51,8 @@ const ApplicabilityCard = (props) => {
           )}
           {props.type && (
             <>
-              <Divider component="li" />
-              <ListItem>
+              <Divider component="li" id="type-div" />
+              <ListItem id="type">
                 <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   Type:
                 </Typography>
@@ -65,8 +65,8 @@ const ApplicabilityCard = (props) => {
           )}
           {(props.state || props.cities) && (
             <>
-              <Divider component="li" />
-              <ListItem>
+              <Divider component="li" id="geography-div" />
+              <ListItem id="geography">
                 <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
                   Geographic Area:
                 </Typography>
@@ -74,15 +74,15 @@ const ApplicabilityCard = (props) => {
               </ListItem>
             </>
           )}
-          <Divider component="li" />
-          <ListItem>
+          <Divider component="li" id="start-div" />
+          <ListItem id="start-date">
             <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
               Start Date:
             </Typography>
             <Typography variant="h5">{startDate}</Typography>
           </ListItem>
           <Divider component="li" />
-          <ListItem>
+          <ListItem id="end-date">
             <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
               End Date:
             </Typography>
