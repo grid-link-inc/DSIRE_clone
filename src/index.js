@@ -16,6 +16,9 @@ import App from './App';
 import { store } from 'store';
 import reportWebVitals from './reportWebVitals';
 
+import { LicenseInfo } from '@mui/x-license-pro';
+LicenseInfo.setLicenseKey('7773000e6267f8cf2628c83eb4bdf32aTz04NDA3OSxFPTE3MzkyNDE3MjMwMDAsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=');
+
 // ==============================|| MAIN - REACT DOM RENDER  ||============================== //
 
 const container = document.getElementById('root');
