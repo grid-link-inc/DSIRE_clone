@@ -701,7 +701,6 @@ function createData(id, name, state_name, websiteurl, program_type_name, program
 // ==============================|| ORDER TABLE - HEADER CELL ||============================== //
 
 const _lightGreen_ = '#EBF9F1';
-const _green_ = '#BBDDD3';
 const _darkGreen_ = '#1F9254';
 const _lightOrange_ = '#FEF2E5';
 const _darkOrange_ = '#CD6200';
@@ -834,6 +833,8 @@ const maybeStoreTableState = (apiRefCurrent) => {
   localStorage.setItem('dsireCloneSiteState', JSON.stringify(myState));
 };
 
+// css-xgot3v-MuiDataGrid-root {
+//     --unstable_DataGrid-radius: 4px;
 function CustomToolbar() {
   return (
     <GridToolbarContainer
@@ -913,34 +914,37 @@ export default function ProgramTable() {
   }
 
   return (
-    <Box
+    <DataGrid
+      apiRef={apiRef}
+      columns={columns}
+      rows={rows}
+      autoHeight
+      pagination
+      loading={loading}
+      pageSizeOptions={[25, 50, 100, 1000]}
+      initialState={initialTableState}
+      slots={{
+        noRowsOverlay: CustomNoRowsOverlay,
+        toolbar: CustomToolbar
+      }}
       sx={{
+        '--DataGrid-overlayHeight': '300px',
+        '& .app-grey--header': {
+          backgroundColor: 'primary.main'
+        },
         '& .MuiChip-root': {
           borderRadius: 10
+        },
+        '& .MuiPaper-root': {
+          border: null
+        },
+        '& .MuiDataGrid-columnHeaders': {
+          border: null,
+          borderRadius: 0,
+          borderBottom: 0
         }
       }}
-    >
-      <DataGrid
-        apiRef={apiRef}
-        columns={columns}
-        rows={rows}
-        autoHeight
-        pagination
-        loading={loading}
-        pageSizeOptions={[25, 50, 100, 1000]}
-        initialState={initialTableState}
-        slots={{
-          noRowsOverlay: CustomNoRowsOverlay,
-          toolbar: CustomToolbar
-        }}
-        sx={{
-          '--DataGrid-overlayHeight': '300px',
-          '& .app-grey--header': {
-            backgroundColor: _green_
-          }
-        }}
-        aria-labelledby="tableTitle"
-      />
-    </Box>
+      aria-labelledby="tableTitle"
+    />
   );
 }
