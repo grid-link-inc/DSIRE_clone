@@ -5,28 +5,26 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Chip from '@mui/material/Chip';
 import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
 import { Link as RouterLink } from 'react-router-dom';
 // material-ui
 import { Box } from '@mui/material';
+// import { GridToolbar } from '@mui/x-data-grid';
+import Pagination from '@mui/material/Pagination';
 
 import { app, functions } from '../../firebase/firebase';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import CustomNoRowsOverlay from './CustomNoRowsOverlay';
 
-// import { DataGrid} from '@mui/x-data-grid';
-import Pagination from '@mui/material/Pagination';
 import {
   DataGridPro as DataGrid,
-  gridPageSelector,
-  gridPageCountSelector,
-  useGridSelector,
+  GridToolbar,
   GridToolbarContainer,
-  GridToolbarDensitySelector,
+  GridToolbarColumnsButton,
   GridToolbarFilterButton,
-  useGridApiContext,
-  useGridRootProps,
+  GridToolbarExport,
+  GridToolbarDensitySelector,
+  GridToolbarQuickFilter,
   useGridApiRef
 } from '@mui/x-data-grid-pro';
 
@@ -833,10 +831,35 @@ const maybeStoreTableState = (apiRefCurrent) => {
   // check table state is not empty object
   if (Object.keys(tableState).length === 0) return;
   const myState = { tableState };
-  console.log('saving state', myState);
   localStorage.setItem('dsireCloneSiteState', JSON.stringify(myState));
 };
 
+function CustomToolbar() {
+  return (
+    <GridToolbarContainer
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        p: 1.5,
+        '& .MuiButton-root': {
+          color: 'primary.dark'
+        }
+      }}
+    >
+      {/* Grouping other toolbar buttons on the left */}
+      <Box sx={{ display: 'flex', gap: 1 }}>
+        <GridToolbarColumnsButton />
+        <GridToolbarFilterButton />
+        <GridToolbarDensitySelector />
+        <GridToolbarExport />
+      </Box>
+
+      {/* QuickFilter on the right */}
+      <GridToolbarQuickFilter sx={{ width: 300 }} />
+    </GridToolbarContainer>
+  );
+}
 
 export default function ProgramTable() {
   const [rows, setRows] = useState([]);
@@ -906,7 +929,10 @@ export default function ProgramTable() {
         loading={loading}
         pageSizeOptions={[25, 50, 100, 1000]}
         initialState={initialTableState}
-        slots={{ noRowsOverlay: CustomNoRowsOverlay }}
+        slots={{
+          noRowsOverlay: CustomNoRowsOverlay,
+          toolbar: CustomToolbar
+        }}
         sx={{
           '--DataGrid-overlayHeight': '300px',
           '& .app-grey--header': {

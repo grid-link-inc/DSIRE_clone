@@ -14,7 +14,8 @@ export default function Button(theme) {
       },
       styleOverrides: {
         root: {
-          fontWeight: 400
+          fontWeight: 400,
+          color: theme.palette.primary.dark // TODO figure out why Button text color is defaulting to primary.main and not text.primary
         },
         contained: {
           ...disabledStyle
