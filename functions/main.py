@@ -96,7 +96,7 @@ def program_to_dict(program_id ,program_name, program_summary , program_websiteu
     secrets=[PROTOTYPING_DB_PW],
     enforce_app_check=ENFORCE_APP_CHECK
 )
-def get_program_enriched(
+def get_program_enriched_v2(
     request: https_fn.CallableRequest
 ):
     try: 

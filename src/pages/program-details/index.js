@@ -117,7 +117,7 @@ const ProgramDetails = () => {
 
   useEffect(() => {
     const functions = getFunctions();
-    const get_program_enriched = httpsCallable(functions, 'get_program_enriched');
+    const get_program_enriched = httpsCallable(functions, 'get_program_enriched_v2');
     get_program_enriched({ id: id }).then((result) => {
       setProgramData(result.data);
     });
