@@ -42,6 +42,7 @@ export default function ThemeCustomization({ children }) {
       },
       palette: theme.palette,
       customShadows: themeCustomShadows,
+      
       typography: themeTypography
     }),
     [theme, themeTypography, themeCustomShadows]

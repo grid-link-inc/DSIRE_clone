@@ -7,6 +7,14 @@ export default function Button(theme) {
     }
   };
 
+  const defaultStyle = {
+    backgroundColor: theme.palette.primary.light,
+    color: theme.palette.text.primary,
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main
+    }
+  };
+
   return {
     MuiButton: {
       defaultProps: {
@@ -21,7 +29,7 @@ export default function Button(theme) {
           ...disabledStyle
         },
         outlined: {
-          ...disabledStyle
+          ...defaultStyle
         }
       }
     }
