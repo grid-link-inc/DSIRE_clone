@@ -5,6 +5,7 @@ import MainLayout from 'layout/MainLayout';
 
 const Programs = Loadable(lazy(() => import('pages/programs')));
 const ProgramDetails = Loadable(lazy(() => import('pages/program-details')));
+const About = Loadable(lazy(() => import('pages/about')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -21,8 +22,12 @@ const MainRoutes = {
       element: <Programs />
     },
     {
-      path: 'programs/:id',
+      path: '/programs/:id',
       element: <ProgramDetails />
+    },
+    {
+      path: '/about',
+      element: <About />
     }
   ]
 };

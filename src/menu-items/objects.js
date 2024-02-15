@@ -1,5 +1,5 @@
 // assets
-import { ProfileOutlined } from '@ant-design/icons';
+import { ProfileOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
@@ -15,6 +15,14 @@ const objects = {
       url: '/programs',
       icon: ProfileOutlined,
       breadcrumbs: true
+    },
+    {
+      id: 'about',
+      title: 'About',
+      type: 'item',
+      url: '/about',
+      icon: InfoCircleOutlined,
+      breadcrumbs: false
     }
   ]
 };
