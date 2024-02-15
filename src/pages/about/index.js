@@ -19,7 +19,7 @@ const AboutPage = () => {
         This site is a database of energy incentives and policies in the United States. It&apos;s a more user-friendly wrapper of{' '}
         <Link href="https://www.dsireusa.org/">DSIRE.org</Link>. However, DSIRE data is known to be incomplete and out-of-date, (to no fault
         of their own; they do great work with limited resources). If you&apos;re interested in compehnsive, up-to-date data, check out my{' '}
-        <Link href="https://xl4yyvsl3l6dyh2s.umso.co/">other project.</Link>
+        <Link href="https://policyexpert.umso.co/">other project.</Link>
       </Typography>
       <Divider sx={{ my: 4 }} />
       <Grid container spacing={5} sx={{ pb: 4 }}>
@@ -62,10 +62,10 @@ const AboutPage = () => {
                   <li>And a chat bot that is trained to answer your questions</li>
                 </ul>
                 If this sounds interesting to you, join the waitlist on my
-                <Link href="https://xl4yyvsl3l6dyh2s.umso.co/"> other project.</Link>
+                <Link href="https://policyexpert.umso.co/"> other project.</Link>
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                <Button href="https://xl4yyvsl3l6dyh2s.umso.co/#waitlist" variant="outlined">
+                <Button href="https://policyexpert.umso.co/#waitlist" variant="outlined">
                   Join Waitlist
                 </Button>
               </Box>

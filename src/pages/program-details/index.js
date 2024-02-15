@@ -112,16 +112,16 @@ const fake_data = {
 const ProgramDetails = () => {
   let { id } = useParams();
 
-  // const [programData, setProgramData] = useState(null);
-  const [programData, setProgramData] = useState(fake_data.data);
+  const [programData, setProgramData] = useState(null);
+  // const [programData, setProgramData] = useState(fake_data.data);
 
-  // useEffect(() => {
-  //   const functions = getFunctions();
-  //   const get_program_enriched = httpsCallable(functions, 'get_program_enriched');
-  //   get_program_enriched({ id: id }).then((result) => {
-  //     setProgramData(result.data);
-  //   });
-  // }, [id]);
+  useEffect(() => {
+    const functions = getFunctions();
+    const get_program_enriched = httpsCallable(functions, 'get_program_enriched');
+    get_program_enriched({ id: id }).then((result) => {
+      setProgramData(result.data);
+    });
+  }, [id]);
 
   if (!programData) {
     return null;
