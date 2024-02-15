@@ -881,7 +881,7 @@ export default function ProgramTable() {
       setRows(rows);
       setLoading(false);
     });
-  });
+  }, [apiRef]);
 
   // Save table state when the user leaves our site
   useEffect(() => {
@@ -893,7 +893,7 @@ export default function ProgramTable() {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  });
+  }, [apiRef]);
 
   // Save table state when the user leaves this page
   useEffect(() => {
