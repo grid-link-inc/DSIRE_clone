@@ -1,5 +1,5 @@
 // material-ui
-import { Unstable_Grid2 as Grid, Typography } from '@mui/material';
+import { Unstable_Grid2 as Grid, Typography, CircularProgress } from '@mui/material';
 
 import { useParams } from 'react-router-dom';
 import MainCard from 'components/MainCard';
@@ -114,22 +114,19 @@ const ProgramDetails = () => {
 
   const [programData, setProgramData] = useState(null);
   // const [programData, setProgramData] = useState(fake_data.data);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const functions = getFunctions();
     const get_program_enriched = httpsCallable(functions, 'get_program_enriched_v2');
     get_program_enriched({ id: id }).then((result) => {
       setProgramData(result.data);
+      setLoading(false);
     });
   }, [id]);
 
-  if (!programData) {
-    return null;
-  }
-
   return (
     <MainCard sx={{ mt: 2 }} content={false}>
-      {/* <ChatWidget /> */}
       <Box
         component="main"
         sx={{
@@ -140,41 +137,48 @@ const ProgramDetails = () => {
         }}
       >
         <Container maxWidth="false">
-          <Grid container spacing={4}>
-            <Grid sm={12}>
-              <Stack spacing={2}>
-                <Typography variant="h2">{programData.program.name}</Typography>
-                <Typography variant="h4" color="textSecondary">
-                  {programData.program_type_name}
-                </Typography>
-                <Divider />
-              </Stack>
+          {loading && (
+            <Box display="flex" justifyContent="center">
+              <CircularProgress />
+            </Box>
+          )}
+          {!loading && (
+            <Grid container spacing={4}>
+              <Grid sm={12}>
+                <Stack spacing={2}>
+                  <Typography variant="h2">{programData.program.name}</Typography>
+                  <Typography variant="h4" color="textSecondary">
+                    {programData.program_type_name}
+                  </Typography>
+                  <Divider />
+                </Stack>
+              </Grid>
+              <Grid sm={12} md={6}>
+                <Stack spacing={4}>
+                  <ApplicabilityCard
+                    state={programData.program.state}
+                    counties={programData.counties}
+                    cities={programData.cities}
+                    zips={programData.zipcodes}
+                    category={programData.program.category}
+                    type={programData.program.type}
+                    startDate={programData.program.start_date}
+                    endDate={programData.program.end_date}
+                  />
+                  <ResourcesCard programWebsite={programData.program.website} authorities={programData.authorities} />
+                </Stack>
+              </Grid>
+              <Grid sm={12} md={6}>
+                <Stack spacing={4}>
+                  <ContactsCard contacts={programData.contacts} />
+                  <DetailsCard listOfDetails={programData.details} />
+                </Stack>
+              </Grid>
+              <Grid sm={12}>
+                <DescriptionCard descriptionHTMLString={programData.program.summary} />
+              </Grid>
             </Grid>
-            <Grid sm={12} md={6}>
-              <Stack spacing={4}>
-                <ApplicabilityCard
-                  state={programData.program.state}
-                  counties={programData.counties}
-                  cities={programData.cities}
-                  zips={programData.zipcodes}
-                  category={programData.program.category}
-                  type={programData.program.type}
-                  startDate={programData.program.start_date}
-                  endDate={programData.program.end_date}
-                />
-                <ResourcesCard programWebsite={programData.program.website} authorities={programData.authorities} />
-              </Stack>
-            </Grid>
-            <Grid sm={12} md={6}>
-              <Stack spacing={4}>
-                <ContactsCard contacts={programData.contacts} />
-                <DetailsCard listOfDetails={programData.details} />
-              </Stack>
-            </Grid>
-            <Grid sm={12}>
-              <DescriptionCard descriptionHTMLString={programData.program.summary} />
-            </Grid>
-          </Grid>
+          )}
         </Container>
       </Box>
     </MainCard>
