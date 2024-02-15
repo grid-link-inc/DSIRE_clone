@@ -92,10 +92,12 @@ def program_to_dict(program_id ,program_name, program_summary , program_websiteu
     }
 
 
-@https_fn.on_call(secrets=[PROTOTYPING_DB_PW])
-def get_program_enriched(
-    request: https_fn.CallableRequest,
+@https_fn.on_call(
+    secrets=[PROTOTYPING_DB_PW],
     enforce_app_check=ENFORCE_APP_CHECK
+)
+def get_program_enriched(
+    request: https_fn.CallableRequest
 ):
     try: 
         program_id = request.data.get('id')
