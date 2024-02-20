@@ -13,16 +13,23 @@ import AnimateButton from 'components/@extended/AnimateButton';
 const NavCard = () => (
   <MainCard sx={{ bgcolor: 'grey.50', m: 3 }}>
     <Stack alignItems="center" spacing={2.5}>
-      <CardMedia component="img" image={avatar} sx={{ width: 112 }} />
+      {/* <CardMedia component="img" image={avatar} sx={{ width: 112 }} /> */}
       <Stack alignItems="center">
-        <Typography variant="h5">Mantis Pro</Typography>
-        <Typography variant="h6" color="secondary">
-          Checkout pro features
+        <Typography variant="h5">Get the full version</Typography>
+        <Typography variant="h6" color="primary.dark">
+          Live data, with an AI assistant
         </Typography>
       </Stack>
       <AnimateButton>
-        <Button component={Link} target="_blank" href="https://mantisdashboard.io" variant="contained" color="success" size="small">
-          Pro
+        <Button
+          component={Link}
+          target="_blank"
+          href="https://policyexpert.umso.co/#waitlist"
+          variant="contained"
+          color="success"
+          size="small"
+        >
+          Join Waitlist
         </Button>
       </AnimateButton>
     </Stack>

@@ -61,8 +61,8 @@ const AboutPage = () => {
                   <li>Daily data updates</li>
                   <li>And a chat bot that is trained to answer your questions</li>
                 </ul>
-                If this sounds interesting to you, join the waitlist on my
-                <Link href="https://policyexpert.umso.co/"> other project.</Link>
+                If this sounds interesting to you, join the waitlist for the
+                <Link href="https://policyexpert.umso.co/"> full version.</Link>
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Button href="https://policyexpert.umso.co/#waitlist" variant="outlined">
