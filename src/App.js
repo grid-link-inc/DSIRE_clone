@@ -1,3 +1,6 @@
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 // project import
 import Routes from 'routes';
 import ThemeCustomization from 'themes';
@@ -8,7 +11,9 @@ import ScrollTop from 'components/ScrollTop';
 const App = () => (
   <ThemeCustomization>
     <ScrollTop>
-      <Routes />
+      <QueryClientProvider client={queryClient}>
+        <Routes />
+      </QueryClientProvider>
     </ScrollTop>
   </ThemeCustomization>
 );

@@ -10,6 +10,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Box } from '@mui/material';
 // import { GridToolbar } from '@mui/x-data-grid';
 import Pagination from '@mui/material/Pagination';
+import { useQuery } from '@tanstack/react-query';
 
 import { app, functions } from '../../firebase/firebase';
 import { getFunctions, httpsCallable } from 'firebase/functions';
@@ -863,25 +864,20 @@ function CustomToolbar() {
 }
 
 export default function ProgramTable() {
-  const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const location = useLocation(); // Hook from React Router to get current location
+  const location = useLocation(); // Hook from React Router to get current location/route
   const apiRef = useGridApiRef();
 
-  useEffect(() => {
-    // setTimeout(() => {
-    //   setRows(fake_rows), 1000;
-    //   setLoading(false);
-    // }, 1000);
-    const functions = getFunctions();
-    const getPrograms = httpsCallable(functions, 'get_programs');
-    getPrograms({}).then((result) => {
-      const data = result.data.programs;
-      let rows = data.map((row) => createData(...row));
-      setRows(rows);
-      setLoading(false);
-    });
-  }, [apiRef]);
+  const OneHourInMS = 60 * 60 * 1000;
+  const functions = getFunctions();
+  const getPrograms = httpsCallable(functions, 'get_programs');
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['programs'],
+    queryFn: () =>
+      getPrograms({}).then((result) => {
+        return result.data.programs.map((row) => createData(...row));
+      }),
+    staleTime: OneHourInMS
+  });
 
   // Save table state when the user leaves our site
   useEffect(() => {
@@ -903,6 +899,8 @@ export default function ProgramTable() {
     };
   }, [location, apiRef]);
 
+  if (error) return 'An error has occurred';
+
   let initialTableState = defaultTableState;
 
   const storedState = localStorage.getItem('dsireCloneSiteState');
@@ -917,10 +915,10 @@ export default function ProgramTable() {
     <DataGrid
       apiRef={apiRef}
       columns={columns}
-      rows={rows}
+      rows={data ? data : []}
       autoHeight
       pagination
-      loading={loading}
+      loading={isLoading}
       pageSizeOptions={[25, 50, 100, 1000]}
       initialState={initialTableState}
       slots={{

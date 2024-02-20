@@ -15,6 +15,7 @@ import ContactsCard from './ContactsCard';
 import ApplicabilityCard from './ApplicabilityCard';
 import ChatWidget from './ChatWidget';
 import { Box, Container, Divider, Stack } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
@@ -112,18 +113,21 @@ const fake_data = {
 const ProgramDetails = () => {
   let { id } = useParams();
 
-  const [programData, setProgramData] = useState(null);
-  // const [programData, setProgramData] = useState(fake_data.data);
-  const [loading, setLoading] = useState(true);
+  const OneHourInMS = 60 * 60 * 1000;
+  const functions = getFunctions();
+  const get_program_enriched = httpsCallable(functions, 'get_program_enriched_v2');
+  const { isLoading, error, data } = useQuery({
+    queryKey: ['program', id],
+    queryFn: () =>
+      get_program_enriched({ id: id }).then((result) => {
+        return result.data;
+      }),
+    staleTime: OneHourInMS
+  });
 
-  useEffect(() => {
-    const functions = getFunctions();
-    const get_program_enriched = httpsCallable(functions, 'get_program_enriched_v2');
-    get_program_enriched({ id: id }).then((result) => {
-      setProgramData(result.data);
-      setLoading(false);
-    });
-  }, [id]);
+  if (error) {
+    return <div>There was an error</div>;
+  }
 
   return (
     <MainCard sx={{ mt: 2 }} content={false}>
@@ -137,18 +141,18 @@ const ProgramDetails = () => {
         }}
       >
         <Container maxWidth="false">
-          {loading && (
+          {isLoading && (
             <Box display="flex" justifyContent="center">
               <CircularProgress />
             </Box>
           )}
-          {!loading && (
+          {!isLoading && (
             <Grid container spacing={4}>
               <Grid sm={12}>
                 <Stack spacing={2}>
-                  <Typography variant="h2">{programData.program.name}</Typography>
+                  <Typography variant="h2">{data.program.name}</Typography>
                   <Typography variant="h4" color="textSecondary">
-                    {programData.program_type_name}
+                    {data.program_type_name}
                   </Typography>
                   <Divider />
                 </Stack>
@@ -156,26 +160,26 @@ const ProgramDetails = () => {
               <Grid sm={12} md={6}>
                 <Stack spacing={4}>
                   <ApplicabilityCard
-                    state={programData.program.state}
-                    counties={programData.counties}
-                    cities={programData.cities}
-                    zips={programData.zipcodes}
-                    category={programData.program.category}
-                    type={programData.program.type}
-                    startDate={programData.program.start_date}
-                    endDate={programData.program.end_date}
+                    state={data.program.state}
+                    counties={data.counties}
+                    cities={data.cities}
+                    zips={data.zipcodes}
+                    category={data.program.category}
+                    type={data.program.type}
+                    startDate={data.program.start_date}
+                    endDate={data.program.end_date}
                   />
-                  <ResourcesCard programWebsite={programData.program.website} authorities={programData.authorities} />
+                  <ResourcesCard programWebsite={data.program.website} authorities={data.authorities} />
                 </Stack>
               </Grid>
               <Grid sm={12} md={6}>
                 <Stack spacing={4}>
-                  <ContactsCard contacts={programData.contacts} />
-                  <DetailsCard listOfDetails={programData.details} />
+                  <ContactsCard contacts={data.contacts} />
+                  <DetailsCard listOfDetails={data.details} />
                 </Stack>
               </Grid>
               <Grid sm={12}>
-                <DescriptionCard descriptionHTMLString={programData.program.summary} />
+                <DescriptionCard descriptionHTMLString={data.program.summary} />
               </Grid>
             </Grid>
           )}
