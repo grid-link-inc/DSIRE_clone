@@ -12,14 +12,18 @@ const AboutPage = () => {
   const theme = useTheme();
   return (
     <MainCard sx={{ py: 4, px: 6 }}>
-      <Typography variant="h1" gutterBottom align="center" sx={{ mb: 4}}>
+      <Typography variant="h1" gutterBottom align="center" sx={{ mb: 4 }}>
         About
       </Typography>
       <Typography variant="body1" align="center" paragraph sx={{ fontSize: 16 }}>
-        This site is a database of energy incentives and policies in the United States. It&apos;s a more user-friendly wrapper of{' '}
-        <Link href="https://www.dsireusa.org/">DSIRE.org</Link>. However, DSIRE data is known to be incomplete and out-of-date, (to no fault
-        of their own; they do great work with limited resources). If you&apos;re interested in compehnsive, up-to-date data, check out my{' '}
-        <Link href="https://policyexpert.umso.co/">other project.</Link>
+        This site is a database of energy incentives and policies in the United States. It&apos;s targeted at renewable energy, energy
+        efficiency, energy storage, and electric vehicles. There are many types of programs represented, including grants, rebates, tax
+        credits, regulatory policy, building codes, standards, and so on.
+      </Typography>
+      <Typography variant="body1" align="center" paragraph sx={{ fontSize: 16 }}>
+        This site is a more user-friendly wrapper of <Link href="https://www.dsireusa.org/">DSIRE.org</Link>. However, DSIRE data is known
+        to be incomplete and out-of-date, (to no fault of their own; they do great work with limited resources). If you&apos;re interested
+        in compehnsive, up-to-date data, check out my <Link href="https://policyexpert.umso.co/">other project.</Link>
       </Typography>
       <Divider sx={{ my: 4 }} />
       <Grid container spacing={5} sx={{ pb: 4 }}>

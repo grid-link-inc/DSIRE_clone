@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 const HeaderContent = () => {
   return (
     <>
-      <Typography variant="h4" sx={{ ml: 1, color: 'text.secondary' }}>
+      <Typography variant="h5" sx={{ ml: 1, color: 'text.secondary' }}>
         A Database of Energy Policies and Incentives
       </Typography>
     </>
