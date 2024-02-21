@@ -2,6 +2,15 @@ import { Card, CardContent, CardHeader, List, ListItem, Divider, Typography } fr
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
 
+import DOMPurify from 'dompurify';
+
+const cleanHTML = (html) => {
+  if (!html) {
+    return '';
+  }
+  return DOMPurify.sanitize(html);
+};
+
 const detailsListItems = (details) => {
   if (!details) {
     return null;
@@ -10,16 +19,19 @@ const detailsListItems = (details) => {
     if (detail.value === null) {
       return null;
     }
+    const detailHTML = cleanHTML(detail.value);
     return (
       <ListItem key={detail.id}>
         <Typography color="textSecondary" sx={{ minWidth: '150px' }}>
           {detail.label}:
         </Typography>
-        <Typography variant="h5">{detail.value}</Typography>
+        <Typography variant="h5">
+          <div dangerouslySetInnerHTML={{ __html: detailHTML }} />
+        </Typography>
       </ListItem>
     );
   });
-}
+};
 
 const DetailsCard = (props) => {
   const theme = useTheme();

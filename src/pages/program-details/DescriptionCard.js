@@ -12,8 +12,6 @@ const cleanHTML = (html) => {
 const DescriptionCard = (props) => {
   const descriptionHTML = cleanHTML(props.descriptionHTMLString);
 
-  <div dangerouslySetInnerHTML={{ __html: descriptionHTML }} />;
-
   return (
     <Card sx={{ boxShadow: 0 }}>
       <CardContent>

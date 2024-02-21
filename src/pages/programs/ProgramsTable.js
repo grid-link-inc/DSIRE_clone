@@ -772,7 +772,8 @@ const columns = [
     align: 'center',
     width: 70,
     hideSortIcons: true,
-    headerClassName: 'app-grey--header'
+    headerClassName: 'app-grey--header',
+    hide: true
   },
   {
     field: 'name',
