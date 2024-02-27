@@ -708,42 +708,62 @@ const _darkOrange_ = '#CD6200';
 const _lightRed_ = '#FBE7E8';
 const _darkRed_ = '#A30D11';
 
-const renderStatus = (params) => {
+// status enum: active, inactive, upcoming
+const statusEnum = {
+  ACTIVE: 'active',
+  INACTIVE: 'inactive',
+  UPCOMING: 'upcoming'
+};
+
+const getStatus = (params) => {
   const currentDate = new Date();
   if (!params.row.start_date && params.row.end_date >= currentDate) {
-    return (
-      <Chip
-        label="Upcoming"
-        size="small"
-        style={{
-          backgroundColor: _lightOrange_,
-          color: _darkOrange_
-        }}
-      />
-    );
+    return statusEnum.UPCOMING;
   }
   if (params.row.start_date <= currentDate && params.row.end_date >= currentDate) {
-    return (
-      <Chip
-        label="Active"
-        size="small"
-        style={{
-          backgroundColor: _lightGreen_,
-          color: _darkGreen_
-        }}
-      />
-    );
+    return statusEnum.ACTIVE;
   }
-  return (
-    <Chip
-      label="Inactive"
-      size="small"
-      style={{
-        backgroundColor: _lightRed_,
-        color: _darkRed_
-      }}
-    />
-  );
+  return statusEnum.INACTIVE;
+};
+
+const renderStatus = (params) => {
+  switch (getStatus(params)) {
+    case statusEnum.ACTIVE:
+      return (
+        <Chip
+          label="Active"
+          size="small"
+          style={{
+            backgroundColor: _lightGreen_,
+            color: _darkGreen_
+          }}
+        />
+      );
+    case statusEnum.INACTIVE:
+      return (
+        <Chip
+          label="Inactive"
+          size="small"
+          style={{
+            backgroundColor: _lightRed_,
+            color: _darkRed_
+          }}
+        />
+      );
+    case statusEnum.UPCOMING:
+      return (
+        <Chip
+          label="Upcoming"
+          size="small"
+          style={{
+            backgroundColor: _lightOrange_,
+            color: _darkOrange_
+          }}
+        />
+      );
+    default:
+      return null;
+  }
 };
 
 const renderName = (params) => {
@@ -802,6 +822,8 @@ const columns = [
   {
     headerName: 'Status',
     headerClassName: 'app-grey--header',
+    field: 'status',
+    valueGetter: getStatus,
     renderCell: renderStatus
   },
   {
