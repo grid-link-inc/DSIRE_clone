@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import * as React from 'react';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Chip from '@mui/material/Chip';
-import { NavLink } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 // material-ui
 import { Box } from '@mui/material';
-// import { GridToolbar } from '@mui/x-data-grid';
-import Pagination from '@mui/material/Pagination';
 import { useQuery } from '@tanstack/react-query';
 
 import { app, functions } from '../../firebase/firebase';
@@ -712,6 +709,7 @@ const _darkRed_ = '#A30D11';
 const statusEnum = {
   ACTIVE: 'active',
   INACTIVE: 'inactive',
+  UNKNOWN: 'unknown',
   UPCOMING: 'upcoming'
 };
 
@@ -720,10 +718,13 @@ const getStatus = (params) => {
   if (!params.row.start_date && params.row.end_date >= currentDate) {
     return statusEnum.UPCOMING;
   }
-  if (params.row.start_date <= currentDate && params.row.end_date >= currentDate) {
+  if (params.row.start_date && params.row.start_date <= currentDate && (!params.row.end_date || params.row.end_date >= currentDate)) {
     return statusEnum.ACTIVE;
   }
-  return statusEnum.INACTIVE;
+  if (params.row.end_date && params.row.end_date < currentDate) {
+    return statusEnum.INACTIVE;
+  }
+  return statusEnum.UNKNOWN;
 };
 
 const renderStatus = (params) => {
@@ -747,6 +748,17 @@ const renderStatus = (params) => {
           style={{
             backgroundColor: _lightRed_,
             color: _darkRed_
+          }}
+        />
+      );
+    case statusEnum.UNKNOWN:
+      return (
+        <Chip
+          label="Unknown"
+          size="small"
+          style={{
+            backgroundColor: 'text.primary',
+            color: 'background.paper'
           }}
         />
       );
@@ -842,8 +854,8 @@ const columns = [
   }
 ];
 
-let fake_rows = staticData['data']['programs'].map((row) => createData(...row));
-fake_rows = [...fake_rows, ...fake_rows];
+// let fake_rows = staticData['data']['programs'].map((row) => createData(...row));
+// fake_rows = [...fake_rows, ...fake_rows];
 
 const defaultTableState = {
   pagination: { paginationModel: { page: 0, pageSize: 25 } },
@@ -865,10 +877,9 @@ const defaultTableState = {
 
 const maybeStoreTableState = (apiRefCurrent) => {
   const tableState = apiRefCurrent.exportState();
-  // check table state is not empty object
   if (Object.keys(tableState).length === 0) return;
-  const myState = { tableState };
-  localStorage.setItem('dsireCloneSiteState', JSON.stringify(myState));
+
+  localStorage.setItem('dsireCloneSiteState', JSON.stringify({ tableState }));
 };
 
 function CustomToolbar() {
