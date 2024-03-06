@@ -19,7 +19,7 @@ import CustomNoRowsOverlay from './CustomNoRowsOverlay';
 
 import {
   DataGridPro as DataGrid,
-  GridToolbar,
+  GridLogicOperator,
   GridToolbarContainer,
   GridToolbarColumnsButton,
   GridToolbarFilterButton,
@@ -846,7 +846,21 @@ let fake_rows = staticData['data']['programs'].map((row) => createData(...row));
 fake_rows = [...fake_rows, ...fake_rows];
 
 const defaultTableState = {
-  pagination: { paginationModel: { page: 0, pageSize: 25 } }
+  pagination: { paginationModel: { page: 0, pageSize: 25 } },
+  filter: {
+    filterModel: {
+      items: [
+        {
+          field: 'status',
+          operator: 'equals',
+          id: 32485,
+          value: 'Active',
+          fromInput: ':r3l:'
+        }
+      ],
+      quickFilterLogicOperator: GridLogicOperator.Or
+    }
+  }
 };
 
 const maybeStoreTableState = (apiRefCurrent) => {
@@ -857,8 +871,6 @@ const maybeStoreTableState = (apiRefCurrent) => {
   localStorage.setItem('dsireCloneSiteState', JSON.stringify(myState));
 };
 
-// css-xgot3v-MuiDataGrid-root {
-//     --unstable_DataGrid-radius: 4px;
 function CustomToolbar() {
   return (
     <GridToolbarContainer
