@@ -29,8 +29,8 @@ const geographicRegion = (state, cities) => {
 };
 
 const ApplicabilityCard = (props) => {
-  const startDate = props.startDate ? new Date(props.startDate).toDateString() : 'N/A';
-  const endDate = props.endDate ? new Date(props.endDate).toDateString() : 'N/A';
+  const startDate = props.startDate ? new Date(props.startDate).toDateString() : '-';
+  const endDate = props.endDate ? new Date(props.endDate).toDateString() : '-';
 
   const theme = useTheme();
   return (
