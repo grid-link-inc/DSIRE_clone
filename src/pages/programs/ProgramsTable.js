@@ -13,9 +13,12 @@ import { app, functions } from '../../firebase/firebase';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 
 import CustomNoRowsOverlay from './CustomNoRowsOverlay';
+import { doesNotContainOperator } from './CustomFilters/DoesNotContainFilterOperator';
+import { notEqualOperator } from './CustomFilters/NotEqualFilterOperator';
 
 import {
   DataGridPro as DataGrid,
+  getGridStringOperators,
   GridLogicOperator,
   GridToolbarContainer,
   GridToolbarColumnsButton,
@@ -909,6 +912,17 @@ function CustomToolbar() {
   );
 }
 
+const addCustomFilterOperators = (columns) => {
+  columns.forEach((column) => {
+    // Because we're overriding the default filter operators, we need to include the default operators
+    column.filterOperators = getGridStringOperators();
+    const eligibleColumns = ['name', 'state_name', 'program_type_name', 'program_category_name', 'status'];
+    if (eligibleColumns.includes(column.field)) {
+      column.filterOperators = [...column.filterOperators, notEqualOperator, doesNotContainOperator];
+    }
+  });
+};
+
 export default function ProgramTable() {
   const location = useLocation(); // Hook from React Router to get current location/route
   const apiRef = useGridApiRef();
@@ -944,6 +958,8 @@ export default function ProgramTable() {
       maybeStoreTableState(currentApiRef);
     };
   }, [location, apiRef]);
+
+  addCustomFilterOperators(columns);
 
   if (error) return 'An error has occurred';
 
