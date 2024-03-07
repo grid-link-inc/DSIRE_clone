@@ -28,7 +28,7 @@ import {
   GridToolbarQuickFilter,
   useGridApiRef
 } from '@mui/x-data-grid-pro';
-import { get } from 'lodash';
+import { get, min } from 'lodash';
 import { fontSize } from '../../../node_modules/@mui/system/index';
 
 function programToDataRow(program) {
@@ -173,6 +173,7 @@ const renderTechnologies = (params) => {
     />
   ));
 };
+
 const columns = [
   {
     field: 'id',
@@ -188,25 +189,29 @@ const columns = [
   {
     field: 'name',
     headerName: 'Name',
-    flex: 1,
+    flex: 2,
+    minWidth: 200,
     headerClassName: 'app-grey--header',
     renderCell: renderName
   },
   {
     field: 'state_name',
     headerName: 'State',
+    minWidth: 100,
     headerClassName: 'app-grey--header'
   },
   {
     field: 'program_type_name',
     headerName: 'Type',
     flex: 1,
+    minWidth: 150,
     headerClassName: 'app-grey--header'
   },
   {
     field: 'technologies',
     headerName: 'Technologies',
-    flex: 1,
+    flex: 2,
+    minWidth: 150,
     headerClassName: 'app-grey--header',
     valueGetter: getTechnologies,
     renderCell: renderTechnologies
@@ -215,13 +220,14 @@ const columns = [
     field: 'program_category_name',
     headerName: 'Category',
     flex: 1,
+    minWidth: 150,
     headerClassName: 'app-grey--header'
   },
   {
     headerName: 'Status',
     headerClassName: 'app-grey--header',
     field: 'status',
-    width: 110,
+    minWidth: 110,
     valueGetter: getStatus,
     renderCell: renderStatus
   },
@@ -229,7 +235,7 @@ const columns = [
     field: 'websiteurl',
     headerName: 'Website',
     headerClassName: 'app-grey--header',
-    width: 80,
+    minWidth: 60,
     renderCell: (params) => {
       if (!params.value) return null;
       return (
@@ -366,6 +372,7 @@ export default function ProgramTable() {
       columns={columns}
       rows={data ? data : []}
       autoHeight
+      autosizeOnMount // Squishes State column
       pagination
       loading={isLoading}
       pageSizeOptions={[25, 50, 100, 1000]}
@@ -389,6 +396,9 @@ export default function ProgramTable() {
           border: null,
           borderRadius: 0,
           borderBottom: 0
+        },
+        '& .MuiDataGrid-columnHeader': {
+          paddingLeft: 2
         },
         '& .MuiDataGrid-virtualScroller': {
           paddingLeft: 1
