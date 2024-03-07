@@ -12,8 +12,8 @@ export default function FilterTextInput(props) {
   }, [item.value]);
 
   const updateFilterValue = (newVal) => {
-    setFilterValueState([newVal]);
-    applyValue({ ...item, value: [newVal] });
+    setFilterValueState(newVal);
+    applyValue({ ...item, value: newVal });
   };
 
   return (
@@ -29,7 +29,7 @@ export default function FilterTextInput(props) {
         placeholder="Filter value"
         label="Value"
         variant="standard"
-        value={filterValueState[0]}
+        value={filterValueState}
         onChange={(event) => updateFilterValue(event.target.value)}
         type="string"
         inputRef={focusElementRef}

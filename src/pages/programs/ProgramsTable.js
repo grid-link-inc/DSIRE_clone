@@ -221,6 +221,7 @@ const columns = [
     headerName: 'Status',
     headerClassName: 'app-grey--header',
     field: 'status',
+    width: 110,
     valueGetter: getStatus,
     renderCell: renderStatus
   },
@@ -247,9 +248,9 @@ const defaultTableState = {
       items: [
         {
           field: 'status',
-          operator: 'equals',
+          operator: 'notEqual',
           id: 32485,
-          value: 'Active',
+          value: 'Inactive',
           fromInput: ':r3l:'
         }
       ],
