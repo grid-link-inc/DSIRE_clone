@@ -255,6 +255,12 @@ const defaultTableState = {
       ],
       quickFilterLogicOperator: GridLogicOperator.Or
     }
+  },
+  columns: {
+    columnVisibilityModel: {
+      id: false,
+      program_category_name: false
+    }
   }
 };
 
@@ -382,6 +388,9 @@ export default function ProgramTable() {
           border: null,
           borderRadius: 0,
           borderBottom: 0
+        },
+        '& .MuiDataGrid-virtualScroller': {
+          paddingLeft: 1
         }
       }}
       aria-labelledby="tableTitle"
