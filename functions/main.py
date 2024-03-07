@@ -51,46 +51,47 @@ def get_programs(request: https_fn.CallableRequest):
                     program_type.name AS program_type_name, 
                     program_category.name AS program_category_name,
                     program.start_date, 
-                    program.end_date 
+                    program.end_date,
+                    technology.name AS technology
                 FROM program
                 JOIN state on program.state_id = state.id
                 JOIN program_type on program.program_type_id = program_type.id
                 JOIN program_category on program.program_category_id = program_category.id
+                LEFT JOIN program_technology ON program.id = program_technology.program_id
+                LEFT JOIN technology ON program_technology.technology_id = technology.id
                 WHERE program.published = 1;
             """)).fetchall()
-            rows = [list(row) for row in results]
-            return {"programs": rows}
+
+            programs = {}
+            for row in results:
+                id, name, state, website, program_type, program_category, start_date, end_date, technology = row
+                if id not in programs:
+                    programs[id] = row_to_base_program(*row)
+                if technology and technology != "Yes; specific technologies not identified":
+                    programs[id]["technologies"].append(technology)
+
+            # TODO create view for this query
+            return {"programs": list(programs.values())}
+            return {"programs": []}
     except Exception as e:
         print(e)
         raise https_fn.HttpsError(
             code=https_fn.FunctionsErrorCode.INTERNAL,
             message=(str(e))
         )
-
-def program_to_dict(program_id ,program_name, program_summary , program_websiteurl , start_date , end_date ,program_type_name , program_category_name , authority_id , authority_code ,authority_websiteurl , authority_effective_date , authority_effective_text , authority_expired_date , authority_expired_text , state_name , utility_name , county_name , city_name , zipcode):
+    
+def row_to_base_program(id, name, state, website, program_type, program_category, start_date, end_date, technology):
     return {
-        "id": program_id,
-        "name": program_name,
-        "summary": program_summary,
-        "websiteurl": program_websiteurl,
+        "id": id,
+        "name": name,
+        "state": state,
+        "website": website,
+        "program_type": program_type,
+        "program_category": program_category,
         "start_date": start_date,
         "end_date": end_date,
-        "program_type_name": program_type_name,
-        "program_category_name": program_category_name,
-        "authority_id": authority_id,
-        "authority_code": authority_code,
-        "authority_websiteurl": authority_websiteurl,
-        "authority_effective_date": authority_effective_date,
-        "authority_effective_text": authority_effective_text,
-        "authority_expired_date": authority_expired_date,
-        "authority_expired_text": authority_expired_text,
-        "state_name": state_name,
-        "utility_name": utility_name,
-        "county_name": county_name,
-        "city_name": city_name,
-        "zipcode": zipcode
+        "technologies": []
     }
-
 
 @https_fn.on_call(
     secrets=[PROTOTYPING_DB_PW],
@@ -104,10 +105,7 @@ def get_program_enriched_v2(
         db_user = 'postgres'
         db_name = 'postgres'
         db_pass = PROTOTYPING_DB_PW.value
-        # db_connection_name = "double-runway-412322:us-west1:prototyping-db"
         db_connection_name = "policy-db:us-west1:dsire-clone-db"
-        # db_connection_name = "/cloudsql/double-runway-412322:us-west1:prototyping-db"
-        # socketPath: '/cloudsql/' + '$PROJECT_ID:$REGION:$SPANNER_INSTANCE_NAME',
 
         # initialize Connector object
         connector = Connector()
@@ -157,6 +155,7 @@ def fetch_program_info(db_conn, program_id):
         fetch_all(db_conn, counties_query.format(id=program_id)),
         fetch_all(db_conn, zipcodes_query.format(id=program_id)),
         fetch_all(db_conn, details_query.format(id=program_id))
+        # TODO fetch all technologies
     ]
 
     return {
@@ -169,170 +168,6 @@ def fetch_program_info(db_conn, program_id):
         "zipcodes": [zip_row_to_obj(*row) for row in results[6]],
         "details": [program_details_row_to_dict(*row) for row in results[7]]
     }
-
-
-
-
-
-
-# import asyncio
-# from sqlalchemy.ext.asyncio import create_async_engine
-# from sqlalchemy.future import select
-
-# class AsyncConnectionContextManager:
-#     def __init__(self, connection):
-#         self.connection = connection
-
-#     async def __aenter__(self):
-#         # Return the connection object when entering the context
-#         return self.connection
-
-#     async def __aexit__(self, exc_type, exc_val, exc_tb):
-#         # Close the connection when exiting the context
-#         await self.connection.close()
-# # Use like this
-# # async def main():
-# #     # Assuming `get_async_connection` is your method to obtain an async connection
-# #     conn = await get_async_connection()
-# #     async with AsyncConnectionContextManager(conn) as connection:
-
-# @https_fn.on_call(secrets=[PROTOTYPING_DB_PW])
-# def get_program_enriched_async(request: https_fn.CallableRequest):
-#     try: 
-#         print("get_program_enriched")
-#         program_id = request.data.get('id')
-#         db_user = 'postgres'
-#         db_name = 'dsire'
-#         db_pass = PROTOTYPING_DB_PW.value
-#         db_connection_name = "double-runway-412322:us-west1:prototyping-db"
-
-#         # initialize Connector object
-#         connector = Connector()
-
-#         # function to return the database connection object
-#         def getconn():
-#             conn = connector.connect(
-#                 db_connection_name,
-#                 "asyncpg",
-#                 user=db_user,
-#                 password=db_pass,
-#                 db=db_name
-#             )
-#             return conn
-
-#         pool = create_async_engine(
-#             "postgresql+asyncpg://",
-#             creator=getconn,
-#         )
-
-
-#         print("get_program_enriched pool created")
-#         # with pool.connect() as db_conn:
-#         #     res = asyncio.run(fetch_program_info(db_conn, program_id))
-#         #     print(res)
-#         #     return res
-#         # async with pool.connect() as db_conn:
-#         #     res = await fetch_program_info(db_conn, program_id)
-#         #     print(res)
-#         #     return res
-#         with pool.connect() as db_conn:
-#             res = asyncio.run(fetch_program_info_v2(db_conn, program_id))
-#             print(res)
-#             return res
-
-#         # db_conn = pool.connect()
-#         # try:
-#         #     return asyncio.run(fetch_program_info(db_conn, program_id))
-#         # finally:
-#         #     db_conn.close()
-
-#     except Exception as e:
-#         print(e)
-#         raise https_fn.HttpsError(
-#             code=https_fn.FunctionsErrorCode.INTERNAL,
-#             message=(str(e))
-#         )
-    
-
-# async def fetch_one(db_conn, query):
-#     print("fetch_one")
-#     result = await db_conn.execute(sqlalchemy.text(query))
-#     print("fetch_one, result", result)
-#     return await result.fetchone()
-
-# async def fetch_all(db_conn, query):
-#     print("fetch_all")
-#     result = await db_conn.execute(sqlalchemy.text(query))
-#     print("fetch_all, result", result)
-#     return await result.fetchall()
-
-# async def fetch_program_info(db_conn, program_id):
-#     results = await asyncio.gather(
-#         fetch_one(db_conn, program_query.format(id=program_id)),
-#         fetch_all(db_conn, authorities_query.format(id=program_id)),
-#         fetch_all(db_conn, contacts_query.format(id=program_id)),
-#         fetch_all(db_conn, utilities_query.format(id=program_id)),
-#         fetch_all(db_conn, cities_query.format(id=program_id)),
-#         fetch_all(db_conn, counties_query.format(id=program_id)),
-#         fetch_all(db_conn, zipcodes_query.format(id=program_id)),
-#         fetch_all(db_conn, details_query.format(id=program_id))
-#     )
-
-#     return {
-#         "program": program_details_to_dict(*results[0]),
-#         "authorities": [authority_row_to_obj(*row) for row in results[1]],
-#         "contacts": [contact_row_to_obj(*row) for row in results[2]],
-#         "utilities": [utiltiy_row_to_obj(*row) for row in results[3]],
-#         "cities": [city_row_to_obj(*row) for row in results[4]],
-#         "counties": [county_row_to_obj(*row) for row in results[5]],
-#         "zipcodes": [zip_row_to_obj(*row) for row in results[6]],
-#         "details": [program_details_row_to_dict(*row) for row in results[7]]
-#     }
-
-# async def fetch_program_info_v2(db_conn, program_id):
-#     async with AsyncConnectionContextManager(db_conn) as session:
-#         results = await asyncio.gather(
-#             fetch_one(session, program_query.format(id=program_id)),
-#             fetch_all(session, authorities_query.format(id=program_id)),
-#             fetch_all(session, contacts_query.format(id=program_id)),
-#             fetch_all(session, utilities_query.format(id=program_id)),
-#             fetch_all(session, cities_query.format(id=program_id)),
-#             fetch_all(session, counties_query.format(id=program_id)),
-#             fetch_all(session, zipcodes_query.format(id=program_id)),
-#             fetch_all(session, details_query.format(id=program_id))
-#         )
-
-#         return {
-#             "program": program_details_to_dict(*results[0]),
-#             "authorities": [authority_row_to_obj(*row) for row in results[1]],
-#             "contacts": [contact_row_to_obj(*row) for row in results[2]],
-#             "utilities": [utiltiy_row_to_obj(*row) for row in results[3]],
-#             "cities": [city_row_to_obj(*row) for row in results[4]],
-#             "counties": [county_row_to_obj(*row) for row in results[5]],
-#             "zipcodes": [zip_row_to_obj(*row) for row in results[6]],
-#             "details": [program_details_row_to_dict(*row) for row in results[7]]
-#         }
-
-
-
-
-
-
-
-
-
-
-# async def fetch_one(db_conn, query):
-#     print("fetch_one")
-#     result = await db_conn.execute(sqlalchemy.text(query))
-#     print("fetch_one, result", result)
-#     return result.fetchone()
-
-# async def fetch_all(db_conn, query):
-#     print("fetch_all")
-#     result = await db_conn.execute(sqlalchemy.text(query))
-#     print("fetch_all, result", result)
-#     return result.fetchall()
 
 """
 details_query()

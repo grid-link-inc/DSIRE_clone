@@ -74,3 +74,166 @@ https://firebase.google.com/docs/functions/config-env?gen=2nd#node.js
   <script defer src="/__/firebase/10.7.2/firebase-analytics-compat.js"></script>
   <script defer src="/__/firebase/10.7.2/firebase-remote-config-compat.js"></script>
   <script defer src="/__/firebase/10.7.2/firebase-performance-compat.js"></script>
+
+
+## Async data fetching
+
+
+# import asyncio
+# from sqlalchemy.ext.asyncio import create_async_engine
+# from sqlalchemy.future import select
+
+# class AsyncConnectionContextManager:
+#     def __init__(self, connection):
+#         self.connection = connection
+
+#     async def __aenter__(self):
+#         # Return the connection object when entering the context
+#         return self.connection
+
+#     async def __aexit__(self, exc_type, exc_val, exc_tb):
+#         # Close the connection when exiting the context
+#         await self.connection.close()
+# # Use like this
+# # async def main():
+# #     # Assuming `get_async_connection` is your method to obtain an async connection
+# #     conn = await get_async_connection()
+# #     async with AsyncConnectionContextManager(conn) as connection:
+
+# @https_fn.on_call(secrets=[PROTOTYPING_DB_PW])
+# def get_program_enriched_async(request: https_fn.CallableRequest):
+#     try: 
+#         print("get_program_enriched")
+#         program_id = request.data.get('id')
+#         db_user = 'postgres'
+#         db_name = 'dsire'
+#         db_pass = PROTOTYPING_DB_PW.value
+#         db_connection_name = "double-runway-412322:us-west1:prototyping-db"
+
+#         # initialize Connector object
+#         connector = Connector()
+
+#         # function to return the database connection object
+#         def getconn():
+#             conn = connector.connect(
+#                 db_connection_name,
+#                 "asyncpg",
+#                 user=db_user,
+#                 password=db_pass,
+#                 db=db_name
+#             )
+#             return conn
+
+#         pool = create_async_engine(
+#             "postgresql+asyncpg://",
+#             creator=getconn,
+#         )
+
+
+#         print("get_program_enriched pool created")
+#         # with pool.connect() as db_conn:
+#         #     res = asyncio.run(fetch_program_info(db_conn, program_id))
+#         #     print(res)
+#         #     return res
+#         # async with pool.connect() as db_conn:
+#         #     res = await fetch_program_info(db_conn, program_id)
+#         #     print(res)
+#         #     return res
+#         with pool.connect() as db_conn:
+#             res = asyncio.run(fetch_program_info_v2(db_conn, program_id))
+#             print(res)
+#             return res
+
+#         # db_conn = pool.connect()
+#         # try:
+#         #     return asyncio.run(fetch_program_info(db_conn, program_id))
+#         # finally:
+#         #     db_conn.close()
+
+#     except Exception as e:
+#         print(e)
+#         raise https_fn.HttpsError(
+#             code=https_fn.FunctionsErrorCode.INTERNAL,
+#             message=(str(e))
+#         )
+    
+
+# async def fetch_one(db_conn, query):
+#     print("fetch_one")
+#     result = await db_conn.execute(sqlalchemy.text(query))
+#     print("fetch_one, result", result)
+#     return await result.fetchone()
+
+# async def fetch_all(db_conn, query):
+#     print("fetch_all")
+#     result = await db_conn.execute(sqlalchemy.text(query))
+#     print("fetch_all, result", result)
+#     return await result.fetchall()
+
+# async def fetch_program_info(db_conn, program_id):
+#     results = await asyncio.gather(
+#         fetch_one(db_conn, program_query.format(id=program_id)),
+#         fetch_all(db_conn, authorities_query.format(id=program_id)),
+#         fetch_all(db_conn, contacts_query.format(id=program_id)),
+#         fetch_all(db_conn, utilities_query.format(id=program_id)),
+#         fetch_all(db_conn, cities_query.format(id=program_id)),
+#         fetch_all(db_conn, counties_query.format(id=program_id)),
+#         fetch_all(db_conn, zipcodes_query.format(id=program_id)),
+#         fetch_all(db_conn, details_query.format(id=program_id))
+#     )
+
+#     return {
+#         "program": program_details_to_dict(*results[0]),
+#         "authorities": [authority_row_to_obj(*row) for row in results[1]],
+#         "contacts": [contact_row_to_obj(*row) for row in results[2]],
+#         "utilities": [utiltiy_row_to_obj(*row) for row in results[3]],
+#         "cities": [city_row_to_obj(*row) for row in results[4]],
+#         "counties": [county_row_to_obj(*row) for row in results[5]],
+#         "zipcodes": [zip_row_to_obj(*row) for row in results[6]],
+#         "details": [program_details_row_to_dict(*row) for row in results[7]]
+#     }
+
+# async def fetch_program_info_v2(db_conn, program_id):
+#     async with AsyncConnectionContextManager(db_conn) as session:
+#         results = await asyncio.gather(
+#             fetch_one(session, program_query.format(id=program_id)),
+#             fetch_all(session, authorities_query.format(id=program_id)),
+#             fetch_all(session, contacts_query.format(id=program_id)),
+#             fetch_all(session, utilities_query.format(id=program_id)),
+#             fetch_all(session, cities_query.format(id=program_id)),
+#             fetch_all(session, counties_query.format(id=program_id)),
+#             fetch_all(session, zipcodes_query.format(id=program_id)),
+#             fetch_all(session, details_query.format(id=program_id))
+#         )
+
+#         return {
+#             "program": program_details_to_dict(*results[0]),
+#             "authorities": [authority_row_to_obj(*row) for row in results[1]],
+#             "contacts": [contact_row_to_obj(*row) for row in results[2]],
+#             "utilities": [utiltiy_row_to_obj(*row) for row in results[3]],
+#             "cities": [city_row_to_obj(*row) for row in results[4]],
+#             "counties": [county_row_to_obj(*row) for row in results[5]],
+#             "zipcodes": [zip_row_to_obj(*row) for row in results[6]],
+#             "details": [program_details_row_to_dict(*row) for row in results[7]]
+#         }
+
+
+
+
+
+
+
+
+
+
+# async def fetch_one(db_conn, query):
+#     print("fetch_one")
+#     result = await db_conn.execute(sqlalchemy.text(query))
+#     print("fetch_one, result", result)
+#     return result.fetchone()
+
+# async def fetch_all(db_conn, query):
+#     print("fetch_all")
+#     result = await db_conn.execute(sqlalchemy.text(query))
+#     print("fetch_all, result", result)
+#     return result.fetchall()

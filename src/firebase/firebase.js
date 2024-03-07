@@ -16,7 +16,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app);
-// connectFunctionsEmulator(functions, '127.0.0.1', 5001);
+connectFunctionsEmulator(functions, '127.0.0.1', 5001);
 
 // Pass your reCAPTCHA v3 site key (public key) to activate(). Make sure this
 // key is the counterpart to the secret key you set in the Firebase console.
