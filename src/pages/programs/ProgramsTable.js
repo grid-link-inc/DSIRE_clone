@@ -29,6 +29,7 @@ import {
   useGridApiRef
 } from '@mui/x-data-grid-pro';
 import { get } from 'lodash';
+import { fontSize } from '../../../node_modules/@mui/system/index';
 
 function programToDataRow(program) {
   const start_date = program.start_date ? new Date(program.start_date) : null;
@@ -86,6 +87,7 @@ const renderStatus = (params) => {
           size="small"
           style={{
             backgroundColor: _lightGreen_,
+            fontSize: '0.75rem',
             color: _darkGreen_
           }}
         />
@@ -97,6 +99,7 @@ const renderStatus = (params) => {
           size="small"
           style={{
             backgroundColor: _lightRed_,
+            fontSize: '0.75rem',
             color: _darkRed_
           }}
         />
@@ -108,6 +111,7 @@ const renderStatus = (params) => {
           size="small"
           style={{
             backgroundColor: 'text.primary',
+            fontSize: '0.75rem',
             color: 'background.paper'
           }}
         />
@@ -119,6 +123,7 @@ const renderStatus = (params) => {
           size="small"
           style={{
             backgroundColor: _lightOrange_,
+            fontSize: '0.75rem',
             color: _darkOrange_
           }}
         />
@@ -162,9 +167,12 @@ const renderTechnologies = (params) => {
         backgroundColor: 'background.paper',
         color: 'text.primary'
       }}
+      sx={{
+        fontSize: '0.75rem'
+      }}
     />
   ));
-}
+};
 const columns = [
   {
     field: 'id',
