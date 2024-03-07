@@ -288,8 +288,8 @@ const addCustomFilterOperators = (columns) => {
   columns.forEach((column) => {
     // Because we're overriding the default filter operators, we need to include the default operators
     column.filterOperators = getGridStringOperators();
-    const eligibleColumns = ['name', 'state_name', 'program_type_name', 'program_category_name', 'status'];
-    if (eligibleColumns.includes(column.field)) {
+    const ineligibleColumns = ['websiteurl', 'id'];
+    if (!ineligibleColumns.includes(column.field)) {
       column.filterOperators = [...column.filterOperators, notEqualOperator, doesNotContainOperator];
     }
   });
